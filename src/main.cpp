@@ -1,5 +1,7 @@
 #include <opencv2/opencv.hpp>
 
+#include "globals.h"
+
 int main ()
 {
   cv::namedWindow ("OpenCV test", cv::WINDOW_AUTOSIZE);

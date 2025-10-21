@@ -5,4 +5,6 @@ add_executable(TaikoCV ${SOURCES})
 
 target_link_libraries(TaikoCV ${OpenCV_LIBS})
 
+include_directories(${CMAKE_SOURCE_DIR}/include)
+
 add_subdirectory(engine)
