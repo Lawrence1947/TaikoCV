@@ -4,3 +4,5 @@ set (SOURCES
 add_executable(TaikoCV ${SOURCES})
 
 target_link_libraries(TaikoCV ${OpenCV_LIBS})
+
+add_subdirectory(engine)
