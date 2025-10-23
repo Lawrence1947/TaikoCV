@@ -35,12 +35,10 @@ int main_loop::run ()
     timer.tick ();
 
     int key = cv::waitKey(1);
-    if (key == 27) // escape
+    if (key == key::escape)
       {
         is_running = false;
       }
-
-    printf ("fps: %f\n", timer.fps ());
   }
   
   cv::destroyAllWindows ();
