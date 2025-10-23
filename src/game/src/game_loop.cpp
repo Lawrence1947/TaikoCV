@@ -5,10 +5,12 @@
 #include "globals.h"
 #include "system/include/screen.h"
 
+#include <stdio.h>
+
 namespace game
 {
 
-main_loop::main_loop () : is_running (true)
+main_loop::main_loop () : is_running (true), timer ()
 {
   system_utils::screen s;
   screen_width = s.get_width ();
@@ -30,11 +32,15 @@ int main_loop::run ()
 
   while (is_running)
   {
+    timer.tick ();
+
     int key = cv::waitKey(1);
     if (key == 27) // escape
       {
         is_running = false;
       }
+
+    printf ("fps: %f\n", timer.fps ());
   }
   
   cv::destroyAllWindows ();

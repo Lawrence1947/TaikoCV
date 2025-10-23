@@ -16,9 +16,8 @@ set(GAME_HEADERS
 include_directories(${CMAKE_SOURCE_DIR}/src/)
 include_directories(${CMAKE_SOURCE_DIR}/src/game/include)
 
-
 add_library(GAME STATIC ${GAME_SOURCES} ${GAME_HEADERS})
 
-target_link_libraries(GAME SYSTEM)
+target_link_libraries(GAME SYSTEM KERNEL)
 
 
