@@ -9,7 +9,7 @@ main_loop::main_loop ()
 
 }
 
-int run ()
+int main_loop::run ()
 {
   return 0;
 }
