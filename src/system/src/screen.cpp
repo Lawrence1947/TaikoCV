@@ -40,7 +40,6 @@ screen::screen ()
   width = primary->width;
   height = primary->height;
 
-  printf ("%d %d\n", width, height);
   XRRFreeMonitors (monitors);
   XCloseDisplay (display);
 }
