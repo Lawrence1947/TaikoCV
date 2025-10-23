@@ -7,6 +7,6 @@ const std::string WINDOW_NAME = "TaikoCV";
 
 constexpr double min_division = 1e-16;
 
-constexpr double target_fps = 60.0;
+constexpr float target_fps = 60.f;
 
 #endif
