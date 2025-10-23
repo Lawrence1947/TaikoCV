@@ -8,11 +8,11 @@
 namespace game
 {
 
-main_loop::main_loop ()
+main_loop::main_loop () : is_running (true)
 {
   system_utils::screen s;
   screen_width = s.get_width ();
-  screen_height = s.get_height (); 
+  screen_height = s.get_height ();
 }
 
 int main_loop::run ()
@@ -28,9 +28,16 @@ int main_loop::run ()
 
   cv::imshow (WINDOW_NAME, resized_image);
 
-  cv::waitKey (0);
+  while (is_running)
+  {
+    int key = cv::waitKey(1);
+    if (key == 27) // escape
+      {
+        is_running = false;
+      }
+  }
+  
   cv::destroyAllWindows ();
-
   return 0;
 }
 

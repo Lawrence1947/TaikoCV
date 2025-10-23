@@ -13,8 +13,12 @@ public:
   ~main_loop ();
   
 private:
+  // system info  
   int screen_width;
   int screen_height;
+
+  // internal loop data
+  bool is_running;
 };
 
 }
