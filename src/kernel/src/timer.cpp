@@ -9,8 +9,8 @@ namespace kernel
 
 timer::timer () : 
   target_delta_t (1.f / target_fps),
-  elapsed_t (0.f),
   delta_t (0.f),
+  elapsed_t (0.f),  
   prev_t (clock::now ()) {}
 
 void timer::tick ()
@@ -18,7 +18,6 @@ void timer::tick ()
   auto curr_t = clock::now ();
   auto elapsed = curr_t - prev_t;
   float frame_delta_t = std::chrono::duration_cast<duration> (elapsed).count ();
-
 
   if (frame_delta_t < target_delta_t)
     {
