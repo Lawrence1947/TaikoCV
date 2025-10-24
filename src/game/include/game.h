@@ -24,7 +24,11 @@ public:
 
   taiko (int screen_width_, int screen_height_);
 
+  void drop_keys ();
   void on_key (int key);
+
+  bool is_blue_pressed () { return left_blue_pressed || right_blue_pressed; }
+  bool is_red_pressed () { return left_red_pressed || right_red_pressed; }
 
   void update ();
 
@@ -45,6 +49,13 @@ private:
   menu main_menu;
   action playing;
   results result;
+
+  // keys
+  bool enter_pressed = false;
+  bool left_blue_pressed = false;
+  bool right_blue_pressed = false;
+  bool left_red_pressed = false;
+  bool right_red_pressed = false;
 };
 
 };

@@ -7,7 +7,7 @@ namespace game
   
 menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 {
-  original_data.main_screen = cv::imread ("../resources/taiko_main_screen.jpg", cv::IMREAD_UNCHANGED);
+  original_data.main_screen = cv::imread ("../resources/main_menu/taiko_main_screen.jpg", cv::IMREAD_UNCHANGED);
 
   cv::Rect fullscreen (0, 0, screen_size.width, screen_size.height);
 
@@ -18,7 +18,7 @@ menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 
 void menu::update ()
 {
-  printf ("menu\n");
+  printf ("main menu\n");
 }
 
 menu::~menu () 

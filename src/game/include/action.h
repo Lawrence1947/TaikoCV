@@ -6,10 +6,15 @@
 namespace game
 {
 
+struct action_objects
+{
+  cv::Mat background;
+};
+
 class action
 {
 public:
-  action ();
+  action (const cv::Size &screen_size_);
 
   void update ();
 
@@ -17,7 +22,10 @@ public:
 
   ~action ();
 private:
+  const cv::Size screen_size;
+
   std::vector<kernel::object> objects;
+  action_objects original_data;
 };
 
 }

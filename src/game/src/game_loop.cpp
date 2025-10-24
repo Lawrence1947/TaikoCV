@@ -28,8 +28,11 @@ int main_loop::run ()
 
   while (is_running)
   {
+    // global tick
     timer.tick ();
 
+    // handle keys
+    taiko_game.drop_keys ();
     int key = cv::waitKey(1);
     if (key == key::escape)
       {
@@ -37,10 +40,13 @@ int main_loop::run ()
       }
     taiko_game.on_key (key);
 
+    // update state
     taiko_game.update ();
 
+    // render frame
     renderer.render (frame, taiko_game.get_objects ());
 
+    // show image
     cv::imshow (WINDOW_NAME, frame);
   }
   
