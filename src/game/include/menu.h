@@ -25,8 +25,8 @@ struct menu_text_params
   int font = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
 
   // dynamic transparency
-  double period = 1.6; // seconds
-  double alpha_min = 0.35;
+  double period = 2.5; // seconds
+  double alpha_min = 0.20;
   double alpha_max = 0.95;
 
   // timer
@@ -55,6 +55,9 @@ private:
   std::vector<kernel::object> objects;
   menu_objects original_data;
   menu_text_params text_params;
+
+  // cached data
+  cv::Mat main_frame;
 };
 
 }

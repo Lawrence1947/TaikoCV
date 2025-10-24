@@ -12,6 +12,7 @@ class object
 public:
   object (const cv::Mat &image_, const cv::Rect rect_) ;
 
+  void set_image (const cv::Mat &other) { image = other; }
   void set_rect (const cv::Rect &other) { rect = other; }
 
   cv::Mat &get_image () { return image; }

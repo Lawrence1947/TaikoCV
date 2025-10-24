@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include <stdio.h>
+#include <math.h>
 
 namespace game
 {
@@ -23,19 +24,11 @@ menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 
   /// main screen
   cv::Rect fullscreen (0, 0, screen_size.width, screen_size.height);
-  cv::Mat main_frame = original_data.main_screen;
+  main_frame = original_data.main_screen;
 
   text_params.pos = cv::Point ((screen_size.width - text_params.text_size.width) / 2, screen_size.height * 0.85);
 
-  cv::Mat shadow = main_frame.clone();
-  cv::putText (shadow, text_params.text, text_params.pos + cv::Point (3, 3),
-              text_params.font, text_params.scale, cv::Scalar(0, 0, 0), text_params.thickness + 3, cv::LINE_AA);
-  cv::addWeighted (shadow, 0.4, main_frame, 0.6, 0.0, main_frame);
-
-  draw_transparent_text (main_frame, text_params.text, text_params.pos, text_params.scale, text_params.font, cv::Scalar (0, 0, 255), text_params.thickness, 1);
-
   kernel::object main_screen (main_frame, fullscreen);
-
   objects.push_back (main_screen);
 
   /// logo
@@ -49,6 +42,22 @@ menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 
 void menu::update (const float delta_t)
 {
+  text_params.time += delta_t;
+
+  double phase = 2.0 * M_PI * std::fmod (text_params.time, text_params.period) / text_params.period;
+  double k = 0.5 * (1.0 + std::sin (phase));               // 0..1
+  double alpha = text_params.alpha_min + (text_params.alpha_max - text_params.alpha_min) * k;
+
+  main_frame = original_data.main_screen;
+  cv::Mat shadow = main_frame.clone();
+  cv::putText (shadow, text_params.text, text_params.pos + cv::Point (3, 3),
+              text_params.font, text_params.scale, cv::Scalar(0, 0, 0), text_params.thickness + 3, cv::LINE_AA);
+  cv::addWeighted (shadow, 0.4, main_frame, 0.6, 0.0, main_frame);
+
+  draw_transparent_text (main_frame, text_params.text, text_params.pos, text_params.scale, text_params.font, cv::Scalar (0, 0, 255), text_params.thickness, alpha);
+
+  objects[0 /*main_screen*/].set_image (main_frame);
+
   printf ("main menu: %f\n", delta_t);
 }
 
