@@ -1,34 +1,50 @@
 #include "menu.h"
 
 #include <stdio.h>
-#include <string>
 
 namespace game
 {
+
+void draw_transparent_text (cv::Mat& frame, const std::string& text,
+                            cv::Point pos, double scale, int font,
+                            cv::Scalar color, int thickness,
+                            double alpha)
+{
+  alpha = std::clamp(alpha, 0.0, 1.0);
+  cv::Mat overlay = frame.clone();
+  cv::putText (overlay, text, pos, font, scale, color, thickness, cv::LINE_AA);
+  cv::addWeighted (overlay, alpha, frame, 1.0 - alpha, 0.0, frame);
+}
   
 menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 {
   original_data.main_screen = cv::imread ("../resources/main_menu/taiko_main_screen.jpg", cv::IMREAD_UNCHANGED);
+  original_data.logo = cv::imread ("../resources/main_menu/taiko_logo.png", cv::IMREAD_UNCHANGED);
 
+  /// main screen
   cv::Rect fullscreen (0, 0, screen_size.width, screen_size.height);
-  cv::Mat frame = original_data.main_screen;
+  cv::Mat main_frame = original_data.main_screen;
 
-  std::string text = "Press ENTER to start";
-  constexpr double scale = 1.4;
-  constexpr int thickness = 4;
-  cv::Scalar color (0, 0, 255);
-  int font = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
+  text_params.pos = cv::Point ((screen_size.width - text_params.text_size.width) / 2, screen_size.height * 0.85);
 
-  cv::Size textSize = cv::getTextSize(text, font, scale, thickness, nullptr);
-  int x = (screen_size.width - textSize.width) / 2;
-  int y = screen_size.height * 0.85;
+  cv::Mat shadow = main_frame.clone();
+  cv::putText (shadow, text_params.text, text_params.pos + cv::Point (3, 3),
+              text_params.font, text_params.scale, cv::Scalar(0, 0, 0), text_params.thickness + 3, cv::LINE_AA);
+  cv::addWeighted (shadow, 0.4, main_frame, 0.6, 0.0, main_frame);
 
-  cv::putText (frame, text, {x + 2, y + 2}, font, scale, cv::Scalar (0, 0, 0), thickness + 2, cv::LINE_AA);
+  draw_transparent_text (main_frame, text_params.text, text_params.pos, text_params.scale, text_params.font, cv::Scalar (0, 0, 255), text_params.thickness, 1);
 
-  cv::putText (frame, text, {x, y}, font, scale, color, thickness, cv::LINE_AA);
+  kernel::object main_screen (main_frame, fullscreen);
 
-  kernel::object main_screen (frame, fullscreen);
   objects.push_back (main_screen);
+
+  /// logo
+  cv::Size logo_size = original_data.logo.size ();
+
+  cv::Rect corner (screen_size.width - logo_size.width / 4, 0, logo_size.width / 4, logo_size.height / 4);
+  kernel::object logo (original_data.logo, corner);
+
+  objects.push_back (logo);
 }
 
 void menu::update (const float delta_t)
