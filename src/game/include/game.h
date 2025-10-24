@@ -3,8 +3,21 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "menu.h"
+#include "action.h"
+#include "results.h"
+
 namespace game
 {
+
+enum class game_mode
+{
+  main_menu,
+  action,
+  results,
+
+  COUNT
+};
 
 class taiko 
 {
@@ -32,6 +45,14 @@ private:
 
   // game objects
   cv::Mat image;
+
+  // game utils
+  game_mode mode;
+
+  // game modes
+  menu main_menu;
+  action playing;
+  results result;
 };
 
 };
