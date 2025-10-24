@@ -17,6 +17,7 @@ namespace game
 enum class game_mode
 {
   main_menu,
+  menu_to_action,
   action,
   results
 };
@@ -42,6 +43,10 @@ public:
   cv::Size get_screen_size () const { return screen_size; }
 
 private:
+
+  inline void update_menu_to_action (const float delta_t);
+
+private:
   // system info
   cv::Size screen_size;
 
@@ -62,6 +67,13 @@ private:
   bool right_blue_pressed = false;
   bool left_red_pressed = false;
   bool right_red_pressed = false;
+
+private:
+  // cached data
+  cv::Mat menu_frame;
+  cv::Mat action_frame;
+
+  double menu_to_action_trans_elapsed = 0.0;
 };
 
 };
