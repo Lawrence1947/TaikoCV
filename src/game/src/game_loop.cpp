@@ -44,9 +44,8 @@ int main_loop::run ()
         is_running = false;
       }
 
-      renderer.render (frame, resized_image);
-
-      cv::imshow (WINDOW_NAME, frame);
+    renderer.render (frame, resized_image);
+    cv::imshow (WINDOW_NAME, frame);
   }
   
   cv::destroyAllWindows ();
