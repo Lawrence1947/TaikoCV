@@ -19,6 +19,8 @@ menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 void menu::update (const float delta_t)
 {
   printf ("main menu: %f\n", delta_t);
+
+  
 }
 
 menu::~menu () 

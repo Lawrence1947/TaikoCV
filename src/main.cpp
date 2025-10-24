@@ -10,6 +10,9 @@
 
 int main ()
 {
+  cv::setUseOptimized(false);
+  cv::setNumThreads(1);
+
   cv::namedWindow (WINDOW_NAME, cv::WINDOW_NORMAL);
   cv::setWindowProperty (WINDOW_NAME, cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
 

@@ -1,12 +1,15 @@
 #include "game.h"
 
+#include "globals.h"
 #include "keymap.h"
+#include "common_math.h"
 
 namespace game
 {
 
 taiko::taiko (int screen_width_, int screen_height_) 
     : screen_size (screen_width_, screen_height_),
+      renderer (screen_size),
       mode (game_mode::main_menu),
       main_menu (screen_size),
       playing (screen_size),
@@ -71,6 +74,30 @@ void taiko::update (const float delta_t)
         {
           mode = game_mode::main_menu;
         }
+    }
+}
+
+void taiko::render (cv::Mat &frame)
+{
+  switch (mode)
+    {
+    case game_mode::main_menu:
+      {
+        renderer.render (frame, main_menu.get_objects ());
+        break;
+      }
+    
+    case game_mode::action:
+      {
+        renderer.render (frame, playing.get_objects ());
+        break;
+      }
+
+    case game_mode::results:
+      {
+        renderer.render (frame, result.get_objects ());
+        break;
+      }
     }
 }
 

@@ -6,7 +6,10 @@
 #include "menu.h"
 #include "action.h"
 #include "results.h"
+
 #include "kernel/include/object.h"
+#include "kernel/include/timer.h"
+#include "kernel/include/renderer.h"
 
 namespace game
 {
@@ -32,6 +35,8 @@ public:
 
   void update (const float delta_t);
 
+  void render (cv::Mat &frame);
+
   ~taiko ();
 
   cv::Size get_screen_size () const { return screen_size; }
@@ -39,8 +44,15 @@ public:
   std::vector<kernel::object> &get_objects ();
 
 private:
+
+  void menu_to_action_transition ();
+
+private:
   // system info
   cv::Size screen_size;
+
+  // kernel utils
+  kernel::renderer renderer;
 
   // game utils
   game_mode mode;

@@ -24,31 +24,31 @@ int main_loop::run ()
 {
   cv::Mat frame (taiko_game.get_screen_size (), CV_8UC3, cv::Scalar (0, 0, 0));
 
-  kernel::renderer renderer (taiko_game.get_screen_size ());
+  
 
   while (is_running)
-  {
-    // global tick
-    timer.tick ();
+    {
+      // global tick
+      timer.tick ();
 
-    // handle keys
-    taiko_game.drop_keys ();
-    int key = cv::waitKey(1);
-    if (key == key::escape)
-      {
-        is_running = false;
-      }
-    taiko_game.on_key (key);
+      // handle keys
+      taiko_game.drop_keys ();
+      int key = cv::waitKey(1);
+      if (key == key::escape)
+        {
+          is_running = false;
+        }
+      taiko_game.on_key (key);
 
-    // update state
-    taiko_game.update (timer.delta ());
+      // update state
+      taiko_game.update (timer.delta ());
 
-    // render frame
-    renderer.render (frame, taiko_game.get_objects ());
+      // render frame
+      taiko_game.render (frame);
 
-    // show image
-    cv::imshow (WINDOW_NAME, frame);
-  }
+      // show image
+      cv::imshow (WINDOW_NAME, frame);
+    }
   
   cv::destroyAllWindows ();
   return 0;
