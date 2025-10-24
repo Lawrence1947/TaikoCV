@@ -41,12 +41,6 @@ public:
 
   cv::Size get_screen_size () const { return screen_size; }
 
-  std::vector<kernel::object> &get_objects ();
-
-private:
-
-  void menu_to_action_transition ();
-
 private:
   // system info
   cv::Size screen_size;

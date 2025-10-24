@@ -101,21 +101,6 @@ void taiko::render (cv::Mat &frame)
     }
 }
 
-std::vector<kernel::object> &taiko::get_objects ()
-{
-  switch (mode)
-    {
-    case game_mode::main_menu:
-      return main_menu.get_objects ();
-    
-    case game_mode::action:
-      return playing.get_objects ();
-
-    case game_mode::results:
-      return result.get_objects ();
-    }
-}
-
 taiko::~taiko ()
 {
 
