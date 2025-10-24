@@ -60,17 +60,6 @@ void taiko::update ()
   
   cv::resize (original_image, resized_image, get_screen_size (), 0, 0, cv::INTER_LINEAR);
   image = resized_image;
-
-  // auto drawButton = [&](cv::Mat& img, const std::string& text, int x, int y, bool active){
-  //   cv::Scalar color = active ? cv::Scalar(0,200,255) : cv::Scalar(90,90,90);
-  //   cv::rectangle(img, {x,y}, {x+60,y+60}, color, cv::FILLED);
-  //   cv::putText(img, text, {x+15,y+40}, cv::FONT_HERSHEY_SIMPLEX, 0.8, {0,0,0}, 2, cv::LINE_AA);
-  // };
-
-  // drawButton(image, "Z",   40,  80, true);
-  // drawButton(image, "X",  120,  80, true);
-  // drawButton(image, ".",  200,  80, true);
-  // drawButton(image, "/",  280,  80, true);
 }
 
 taiko::~taiko ()
