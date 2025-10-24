@@ -6,23 +6,24 @@
 namespace game
 {
 
+class taiko;
+
 class main_loop
 {
 public:
-  main_loop ();
+  main_loop (taiko &taiko_game_);
 
   int run ();
 
   ~main_loop ();
   
 private:
-  // system info  
-  int screen_width;
-  int screen_height;
-
   // internal loop data
   bool is_running;
   kernel::timer timer;
+
+  // game
+  taiko &taiko_game;
 };
 
 }
