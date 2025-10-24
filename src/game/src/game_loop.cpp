@@ -3,6 +3,7 @@
 #include <opencv2/opencv.hpp>
 
 #include "globals.h"
+#include "keymap.h"
 #include "system/include/screen.h"
 #include "kernel/include/renderer.h"
 
@@ -35,8 +36,6 @@ int main_loop::run ()
 
   while (is_running)
   {
-    // frame.setTo (screen_size, cv::Scalar (0, 0, 0));
-
     timer.tick ();
 
     int key = cv::waitKey(1);
