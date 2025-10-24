@@ -8,9 +8,12 @@
 namespace kernel
 {
 
-void renderer::render (cv::Mat &frame, const cv::Mat &image)
+void renderer::render (cv::Mat &frame, std::vector<kernel::object> objects)
 {
-  image.convertTo (frame, CV_8UC3, 1.);
+  for (auto &object : objects)
+    {
+      blit_with_alpha (frame, object.get_image (), object.get_rect ());
+    }
 }
 
 inline void renderer::blit_with_alpha (cv::Mat &frame, const cv::Mat &src, const cv::Rect &dst_rect)

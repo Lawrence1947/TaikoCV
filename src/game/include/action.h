@@ -1,6 +1,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+#include "kernel/include/object.h"
+
 namespace game
 {
 
@@ -11,7 +13,11 @@ public:
 
   void update ();
 
+  std::vector<kernel::object> &get_objects () { return objects; }
+
   ~action ();
+private:
+  std::vector<kernel::object> objects;
 };
 
 }

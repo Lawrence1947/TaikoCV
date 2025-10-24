@@ -6,11 +6,9 @@ namespace game
 {
 
 taiko::taiko (int screen_width_, int screen_height_) 
-    : screen_width (screen_width_), 
-      screen_height (screen_height_),
-      screen_size (screen_width_, screen_height_),
+    : screen_size (screen_width_, screen_height_),
       mode (game_mode::main_menu),
-      main_menu (),
+      main_menu (screen_size),
       playing (),
       result ()
 {}
@@ -46,20 +44,22 @@ void taiko::update ()
     case game_mode::results:
       result.update ();
       break;
-
-      
-
-    case game_mode::COUNT:
-      // impossible case
-      break;
     }
+}
 
+std::vector<kernel::object> &taiko::get_objects ()
+{
+  switch (mode)
+    {
+    case game_mode::main_menu:
+      return main_menu.get_objects ();
+    
+    case game_mode::action:
+      return playing.get_objects ();
 
-  cv::Mat original_image = cv::imread ("../resources/taiko_main_screen.jpg", 1);
-  cv::Mat resized_image;
-  
-  cv::resize (original_image, resized_image, get_screen_size (), 0, 0, cv::INTER_LINEAR);
-  image = resized_image;
+    case game_mode::results:
+      return result.get_objects ();
+    }
 }
 
 taiko::~taiko ()

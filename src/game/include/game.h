@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "action.h"
 #include "results.h"
+#include "kernel/include/object.h"
 
 namespace game
 {
@@ -14,9 +15,7 @@ enum class game_mode
 {
   main_menu,
   action,
-  results,
-
-  COUNT
+  results
 };
 
 class taiko 
@@ -31,20 +30,13 @@ public:
 
   ~taiko ();
 
-  int get_screen_width  () const { return screen_width; }
-  int get_screen_height () const { return screen_height; }
   cv::Size get_screen_size () const { return screen_size; }
 
-  cv::Mat &get_image () { return image; }
+  std::vector<kernel::object> &get_objects ();
 
 private:
   // system info
-  int screen_width;
-  int screen_height;
   cv::Size screen_size;
-
-  // game objects
-  cv::Mat image;
 
   // game utils
   game_mode mode;

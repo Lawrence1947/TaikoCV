@@ -22,10 +22,9 @@ main_loop::main_loop (taiko &taiko_game_)
 
 int main_loop::run ()
 {
-  cv::Size screen_size (taiko_game.get_screen_width (), taiko_game.get_screen_height ());
-  cv::Mat frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
+  cv::Mat frame (taiko_game.get_screen_size (), CV_8UC3, cv::Scalar (0, 0, 0));
 
-  kernel::renderer renderer (screen_size);
+  kernel::renderer renderer (taiko_game.get_screen_size ());
 
   while (is_running)
   {
@@ -40,7 +39,7 @@ int main_loop::run ()
 
     taiko_game.update ();
 
-    renderer.render (frame, taiko_game.get_image ());
+    renderer.render (frame, taiko_game.get_objects ());
 
     cv::imshow (WINDOW_NAME, frame);
   }
