@@ -6,10 +6,15 @@
 namespace game
 {
 
+struct results_objects
+{
+  cv::Mat background;
+};
+
 class results
 {
 public:
-  results ();
+  results (const cv::Size &screen_size_);
 
   void update ();
 
@@ -17,7 +22,10 @@ public:
 
   ~results ();
 private:
+  const cv::Size screen_size;
+
   std::vector<kernel::object> objects;
+  results_objects original_data;
 };
 
 }

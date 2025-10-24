@@ -10,7 +10,7 @@ taiko::taiko (int screen_width_, int screen_height_)
       mode (game_mode::main_menu),
       main_menu (screen_size),
       playing (screen_size),
-      result ()
+      result (screen_size)
 {}
 
 void taiko::on_key (int key)
