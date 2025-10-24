@@ -4,6 +4,7 @@
 
 #include "globals.h"
 #include "system/include/screen.h"
+#include "kernel/include/renderer.h"
 
 #include <stdio.h>
 
@@ -22,16 +23,20 @@ int main_loop::run ()
   cv::namedWindow (WINDOW_NAME, cv::WINDOW_NORMAL);
   cv::setWindowProperty (WINDOW_NAME, cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
 
+  cv::Size screen_size (screen_width, screen_height);
+  cv::Mat frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
+
   cv::Mat original_image = cv::imread ("../resources/taiko_load.jpg", 1);
   cv::Mat resized_image;
-
-  cv::Size screen_size (screen_width, screen_height);
+  
   cv::resize (original_image, resized_image, screen_size, 0, 0, cv::INTER_LINEAR);
 
-  cv::imshow (WINDOW_NAME, resized_image);
+  kernel::renderer renderer;
 
   while (is_running)
   {
+    // frame.setTo (screen_size, cv::Scalar (0, 0, 0));
+
     timer.tick ();
 
     int key = cv::waitKey(1);
@@ -39,6 +44,10 @@ int main_loop::run ()
       {
         is_running = false;
       }
+
+      renderer.render (frame, resized_image);
+
+      cv::imshow (WINDOW_NAME, frame);
   }
   
   cv::destroyAllWindows ();
