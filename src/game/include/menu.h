@@ -18,7 +18,7 @@ class menu
 public:
   menu (const cv::Size &screen_size_);
 
-  void update ();
+  void update (const float delta_t);
 
   std::vector<kernel::object> &get_objects () { return objects; }
 

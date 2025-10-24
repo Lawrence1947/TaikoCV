@@ -41,7 +41,7 @@ int main_loop::run ()
     taiko_game.on_key (key);
 
     // update state
-    taiko_game.update ();
+    taiko_game.update (timer.delta ());
 
     // render frame
     renderer.render (frame, taiko_game.get_objects ());

@@ -46,11 +46,11 @@ void taiko::drop_keys ()
   right_blue_pressed = false;
 }
 
-void taiko::update ()
+void taiko::update (const float delta_t)
 {
   if (mode == game_mode::main_menu)
     {
-      main_menu.update ();
+      main_menu.update (delta_t);
       if (enter_pressed)
         {
           mode = game_mode::action;
@@ -58,7 +58,7 @@ void taiko::update ()
     }
   else if (mode == game_mode::action)
     {
-      playing.update ();
+      playing.update (delta_t);
       if (enter_pressed)
         {
           mode = game_mode::results;
@@ -66,7 +66,7 @@ void taiko::update ()
     }
   else if (mode == game_mode::results)
     {
-      result.update ();
+      result.update (delta_t);
       if (enter_pressed)
         {
           mode = game_mode::main_menu;

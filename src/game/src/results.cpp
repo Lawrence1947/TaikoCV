@@ -16,9 +16,9 @@ results::results (const cv::Size &screen_size_) : screen_size (screen_size_)
   objects.push_back (background);
 }
 
-void results::update ()
+void results::update (const float delta_t)
 {
-  printf ("results\n");
+  printf ("results: %f\n", delta_t);
 }
 
 results::~results () 

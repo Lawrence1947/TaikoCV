@@ -30,7 +30,7 @@ public:
   bool is_blue_pressed () { return left_blue_pressed || right_blue_pressed; }
   bool is_red_pressed () { return left_red_pressed || right_red_pressed; }
 
-  void update ();
+  void update (const float delta_t);
 
   ~taiko ();
 
