@@ -11,7 +11,6 @@ namespace game
 struct menu_objects
 {
   cv::Mat main_screen;
-  cv::Mat logo;
 };
 
 class menu
