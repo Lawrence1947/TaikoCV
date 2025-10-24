@@ -9,6 +9,11 @@ taiko::taiko (int screen_width_, int screen_height_)
       screen_size (screen_width_, screen_height_)
 {}
 
+void taiko::on_key (int key)
+{
+  (void) key;
+}
+
 void taiko::update ()
 {
   cv::Mat original_image = cv::imread ("../resources/taiko_main_screen.jpg", 1);

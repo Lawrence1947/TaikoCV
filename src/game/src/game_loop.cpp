@@ -36,6 +36,7 @@ int main_loop::run ()
       {
         is_running = false;
       }
+    taiko_game.on_key (key);
 
     taiko_game.update ();
 

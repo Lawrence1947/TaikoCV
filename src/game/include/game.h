@@ -12,6 +12,8 @@ public:
 
   taiko (int screen_width_, int screen_height_);
 
+  void on_key (int key);
+
   void update ();
 
   ~taiko ();
