@@ -18,7 +18,7 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_)
 
 void action::update (const float delta_t)
 {
-  printf ("action: %f\n", delta_t);
+  
 }
 
 action::~action () 

@@ -48,6 +48,9 @@ int main_loop::run ()
 
       // show image
       cv::imshow (WINDOW_NAME, frame);
+
+      // debug
+      printf ("FPS: %.1f\n", timer.fps ());
     }
   
   cv::destroyAllWindows ();

@@ -57,8 +57,6 @@ void menu::update (const float delta_t)
   draw_transparent_text (main_frame, text_params.text, text_params.pos, text_params.scale, text_params.font, cv::Scalar (0, 0, 255), text_params.thickness, alpha);
 
   objects[0 /*main_screen*/].set_image (main_frame);
-
-  printf ("main menu: %f\n", delta_t);
 }
 
 menu::~menu () {}

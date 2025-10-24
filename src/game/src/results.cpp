@@ -18,7 +18,7 @@ results::results (const cv::Size &screen_size_) : screen_size (screen_size_)
 
 void results::update (const float delta_t)
 {
-  printf ("results: %f\n", delta_t);
+  
 }
 
 results::~results () 
