@@ -24,8 +24,6 @@ int main_loop::run ()
 {
   cv::Mat frame (taiko_game.get_screen_size (), CV_8UC3, cv::Scalar (0, 0, 0));
 
-  
-
   while (is_running)
     {
       // global tick

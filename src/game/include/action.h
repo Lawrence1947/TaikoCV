@@ -1,6 +1,8 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+#include <opencv2/opencv.hpp>
+
 #include "kernel/include/object.h"
 
 namespace game
@@ -9,6 +11,8 @@ namespace game
 struct action_objects
 {
   cv::Mat background;
+  cv::Mat main_field;
+  cv::Mat combo_panel;
 };
 
 class action
@@ -26,6 +30,13 @@ private:
 
   std::vector<kernel::object> objects;
   action_objects original_data;
+
+  int hit_x;
+  int hit_y;
+
+  int hit_r_outer;
+  int hiy_r_inner;
+  int hiy_r_big;
 };
 
 }
