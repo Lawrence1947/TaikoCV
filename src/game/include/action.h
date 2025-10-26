@@ -2,11 +2,36 @@
 #define ACTION_H
 
 #include <opencv2/opencv.hpp>
+#include <vector>
 
 #include "kernel/include/object.h"
 
 namespace game
 {
+
+enum class taiko_color
+{
+  red,
+  blue
+};
+
+enum class taiko_size
+{
+  small,
+  big
+};
+
+struct taiko_circle
+{
+  taiko_color color;
+  taiko_size size;
+  cv::Point2f position;
+  float speed;
+  bool active;
+  
+  taiko_circle() : color(taiko_color::red), size(taiko_size::small), 
+                   position(0.f, 0.f), speed(0.f), active(false) {}
+};
 
 struct action_objects
 {
@@ -25,6 +50,11 @@ public:
   std::vector<kernel::object> &get_objects () { return objects; }
 
   ~action ();
+
+private:
+  void spawn_circle();
+  void update_circles(const float delta_t);
+  void update_circle_objects();
 private:
   const cv::Size screen_size;
 
@@ -35,8 +65,15 @@ private:
   int hit_y;
 
   int hit_r_outer;
-  int hiy_r_inner;
-  int hiy_r_big;
+  int hit_r_inner;
+  int hit_r_big;
+
+  // Taiko circles system
+  std::vector<taiko_circle> circles;
+  float circle_spawn_timer;
+  static constexpr float CIRCLE_SPAWN_INTERVAL = 0.5f; // spawn every 1 second for testing
+  static constexpr float CIRCLE_SPEED = 500.0f; // pixels per second
+  static constexpr int MAX_CIRCLES = 10; // maximum active circles
 };
 
 }
