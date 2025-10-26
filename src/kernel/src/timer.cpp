@@ -1,6 +1,7 @@
 #include "timer.h"
 
 #include <thread>
+#include <algorithm>
 
 #include "globals.h"
 
@@ -15,21 +16,23 @@ timer::timer () :
 
 void timer::tick ()
 {
-  auto curr_t = clock::now ();
-  auto elapsed = curr_t - prev_t;
-  float frame_delta_t = std::chrono::duration_cast<duration> (elapsed).count ();
+  auto target_time = prev_t + secondsf(target_delta_t);
 
-  if (frame_delta_t < target_delta_t)
+  auto now = clock::now();
+  if (now < target_time)
     {
-      auto sleep_duration = duration (target_delta_t - frame_delta_t);
-      std::this_thread::sleep_for (std::chrono::duration_cast<std::chrono::microseconds> (sleep_duration));
-      curr_t = clock::now ();
-      frame_delta_t = duration (target_delta_t - frame_delta_t).count ();
+      std::this_thread::sleep_until (target_time);
+      now = clock::now();
     }
 
-  delta_t = frame_delta_t;
-  elapsed_t += frame_delta_t;
-  prev_t = curr_t;
+  secondsf dt = now - prev_t;
+
+  const float dt_min = 1.0f / 1000.0f;
+  const float dt_max = 1.0f / 10.0f;
+  delta_t = std::clamp (dt.count (), dt_min, dt_max);
+
+  elapsed_t += delta_t;
+  prev_t = now;
 }
 
 timer::~timer () {}

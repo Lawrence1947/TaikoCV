@@ -8,8 +8,8 @@ namespace kernel
 
 class timer
 {
-  using clock = std::chrono::high_resolution_clock;
-  using duration = std::chrono::duration<float>;
+  using clock    = std::chrono::steady_clock;
+  using secondsf = std::chrono::duration<float>;
 
 public:
   timer ();
