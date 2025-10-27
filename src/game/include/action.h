@@ -65,6 +65,8 @@ private:
   void draw_keys (cv::Mat &frame, key::input_system &input);
   void draw_key (cv::Mat &frame, cv::Point pos, const char *label, bool is_down, cv::Scalar color);
 
+  void draw_results_data (cv::Mat &frame);
+
 private:
   const cv::Size screen_size;
 
@@ -83,6 +85,11 @@ private:
   int hit_left_big_border;
   int hit_right_small_border;
   int hit_left_small_border;
+
+  // results data
+  int current_combo = 0;
+  int max_combo = 0;
+  int score = 0;
 
   // Taiko circles system
   std::vector<taiko_circle> circles;

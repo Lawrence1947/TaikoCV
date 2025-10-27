@@ -24,7 +24,6 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
 
   objects.push_back (background);
 
-
   // main_field
   original_data.main_field = cv::Mat (screen_size.height / 4, screen_size.width, CV_8UC3, cv::Scalar (32, 32, 36));
   cv::rectangle (original_data.main_field, cv::Rect (0, 0, original_data.main_field.cols, original_data.main_field.rows), cv::Scalar (100, 100, 110), 2, cv::LINE_AA);
@@ -89,6 +88,53 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   circles.resize(MAX_CIRCLES);
 }
 
+void action::draw_results_data(cv::Mat &frame)
+{
+    std::string score_str = "Score: " + std::to_string (score);
+    std::string max_combo_str = "Max combo: " + std::to_string (max_combo);
+    
+    int font_face = cv::FONT_HERSHEY_SIMPLEX;
+    double font_scale = 1.5;
+    int thickness = 3;
+    
+    int baseline = 0;
+    cv::Size score_str_size = cv::getTextSize (score_str, font_face, font_scale, thickness, &baseline);
+    cv::Size max_combo_str_size = cv::getTextSize (max_combo_str, font_face, font_scale, thickness, &baseline);
+    
+    int margin_x = 20;
+    int margin_y = 40;
+    
+    int max_str_width = std::max (score_str_size.width, max_combo_str_size.width);
+    int total_height = score_str_size.height + max_combo_str_size.height + 25;
+    
+    int bg_x = frame.size ().width - max_str_width - margin_x * 2;
+    int bg_y = margin_y / 2;
+    
+    cv::rectangle(frame, 
+                 cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
+                 cv::Scalar (32, 32, 36),
+                 cv::FILLED);             
+    
+    cv::rectangle(frame,
+                 cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
+                 cv::Scalar (100, 100, 110),
+                 2,
+                 cv::LINE_AA);
+    
+    int score_x = frame.size ().width - max_str_width - margin_x;
+    int max_combo_x = score_x;
+
+    int score_y = margin_y + score_str_size.height;
+    int max_combo_y = score_y + max_combo_str_size.height + 15;
+    
+    cv::Scalar text_color (230, 230, 230);
+    
+    cv::putText (frame, score_str, cv::Point (score_x, score_y), 
+                font_face, font_scale, text_color, thickness, cv::LINE_AA);
+    cv::putText (frame, max_combo_str, cv::Point (max_combo_x, max_combo_y), 
+                font_face, font_scale, text_color, thickness, cv::LINE_AA);
+}
+
 void action::draw_keys (cv::Mat &frame, key::input_system &input)
 {
   const int cy = frame.size ().height / 1.15; 
@@ -134,6 +180,9 @@ void action::update (const float delta_t, key::input_system &input)
   }
 
   draw_keys (objects[0].get_image (), input);
+  draw_results_data (objects[0].get_image ());
+
+  // printf ("%d %d %d\n", score, current_combo, max_combo);
 
   handle_key_press (input);
   
@@ -183,9 +232,12 @@ void action::update_circles (const float delta_t)
       if (circle.position.x < hit_left_big_border)
       {
         circle.active = false;
+        current_combo = 0;
       }
     }
   }
+
+  max_combo = std::max (current_combo, max_combo);
 }
 
 void action::update_circle_objects ()
@@ -262,6 +314,8 @@ void action::handle_key_press (key::input_system &input)
 
     if (color_pressed == circle.color)
       {
+        score += 300;
+        ++current_combo;
         circle.active = false;
       }
   }

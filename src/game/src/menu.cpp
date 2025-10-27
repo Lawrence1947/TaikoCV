@@ -31,7 +31,7 @@ menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
   text_params.text_size = cv::getTextSize (text_params.text, text_params.font, text_params.scale, text_params.thickness, &baseline);
   text_params.pos = cv::Point ((screen_size.width - text_params.text_size.width) / 2, screen_size.height * 0.85 + baseline);
 
-  printf ("debug %d %d %d", screen_size.width, text_params.text_size.width, screen_size.height);
+  // printf ("debug %d %d %d", screen_size.width, text_params.text_size.width, screen_size.height);
 
   kernel::object main_screen (main_frame, fullscreen);
   objects.push_back (main_screen);
