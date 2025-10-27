@@ -45,6 +45,8 @@ class action
 public:
   action (const cv::Size &screen_size_);
 
+  void reset ();
+
   void update (const float delta_t);
 
   std::vector<kernel::object> &get_objects () { return objects; }

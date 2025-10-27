@@ -82,6 +82,15 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   circles.resize(MAX_CIRCLES);
 }
 
+void action::reset ()
+{
+  for (auto &circle : circles)
+  {
+    circle.active = false;
+  }
+  update_circle_objects ();
+}
+
 void action::update (const float delta_t)
 {
   // Update circle spawn timer
@@ -109,7 +118,7 @@ action::~action ()
 void action::spawn_circle()
 {
   // Find inactive circle
-  for (auto& circle : circles)
+  for (auto &circle : circles)
   {
     if (!circle.active)
     {

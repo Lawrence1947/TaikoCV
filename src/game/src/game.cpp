@@ -76,6 +76,7 @@ void taiko::update (const float delta_t)
       if (enter_pressed)
         {
           mode = game_mode::results;
+          playing.reset ();
         }
     }
   else if (mode == game_mode::results)
