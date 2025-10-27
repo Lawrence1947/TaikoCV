@@ -67,6 +67,8 @@ private:
 
   void draw_results_data (cv::Mat &frame);
 
+  void update_combo_panel ();
+
 private:
   const cv::Size screen_size;
 

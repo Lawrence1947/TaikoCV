@@ -64,6 +64,18 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
 
   original_data.combo_panel = cv::Mat (combo_rect.height, combo_rect.width, CV_8UC3, cv::Scalar (60, 65, 100));
 
+  kernel::object combo_panel (original_data.combo_panel, combo_rect);
+  objects.push_back (combo_panel);
+
+  // Initialize circles vector
+  circles.resize(MAX_CIRCLES);
+}
+
+void action::update_combo_panel ()
+{
+  cv::Rect lane (0, screen_size.height / 3, screen_size.width, screen_size.height / 4);
+  cv::Rect combo_rect (0, lane.y, lane.height, lane.height);
+
   cv::rectangle (original_data.combo_panel, cv::Rect (0, 0, original_data.combo_panel.cols, original_data.combo_panel.rows), cv::Scalar (150, 165, 205), 2, cv::LINE_AA);
 
   cv::Mat &p = original_data.combo_panel;
@@ -81,58 +93,71 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   cv::line (p, cv::Point (cx, cy - r_inner), cv::Point (cx, cy + r_inner), cv::Scalar (180, 180, 180), 3,cv::LINE_AA);
   cv::circle (p, cv::Point (cx, cy), r_outer, cv::Scalar (160, 160, 160), 2, cv::LINE_AA);
 
-  kernel::object combo_panel (original_data.combo_panel, combo_rect);
-  objects.push_back (combo_panel);
+  std::string current_combo_str = std::to_string (current_combo);
+  
+  int font_face = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
+  double font_scale = 1.5;
+  int thickness = 3;
+  
+  int baseline = 0;
+  cv::Size current_combo_str_size = cv::getTextSize (current_combo_str, font_face, font_scale, thickness, &baseline);
 
-  // Initialize circles vector
-  circles.resize(MAX_CIRCLES);
+  int str_x = combo_rect.size ().width / 2 - current_combo_str_size.width / 2;
+  int str_y = lane.y / 2.1 - current_combo_str_size.height / 2;
+  
+  cv::Scalar text_color (0, 0, 0);
+  
+  cv::putText (original_data.combo_panel, current_combo_str, cv::Point (str_x, str_y), 
+              font_face, font_scale, text_color, thickness, cv::LINE_AA);
+
+  objects[2].set_image (original_data.combo_panel);
 }
 
 void action::draw_results_data(cv::Mat &frame)
 {
-    std::string score_str = "Score: " + std::to_string (score);
-    std::string max_combo_str = "Max combo: " + std::to_string (max_combo);
-    
-    int font_face = cv::FONT_HERSHEY_SIMPLEX;
-    double font_scale = 1.5;
-    int thickness = 3;
-    
-    int baseline = 0;
-    cv::Size score_str_size = cv::getTextSize (score_str, font_face, font_scale, thickness, &baseline);
-    cv::Size max_combo_str_size = cv::getTextSize (max_combo_str, font_face, font_scale, thickness, &baseline);
-    
-    int margin_x = 20;
-    int margin_y = 40;
-    
-    int max_str_width = std::max (score_str_size.width, max_combo_str_size.width);
-    int total_height = score_str_size.height + max_combo_str_size.height + 25;
-    
-    int bg_x = frame.size ().width - max_str_width - margin_x * 2;
-    int bg_y = margin_y / 2;
-    
-    cv::rectangle(frame, 
-                 cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
-                 cv::Scalar (32, 32, 36),
-                 cv::FILLED);             
-    
-    cv::rectangle(frame,
-                 cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
-                 cv::Scalar (100, 100, 110),
-                 2,
-                 cv::LINE_AA);
-    
-    int score_x = frame.size ().width - max_str_width - margin_x;
-    int max_combo_x = score_x;
+  std::string score_str = "Score: " + std::to_string (score);
+  std::string max_combo_str = "Max combo: " + std::to_string (max_combo);
+  
+  int font_face = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
+  double font_scale = 1.5;
+  int thickness = 3;
+  
+  int baseline = 0;
+  cv::Size score_str_size = cv::getTextSize (score_str, font_face, font_scale, thickness, &baseline);
+  cv::Size max_combo_str_size = cv::getTextSize (max_combo_str, font_face, font_scale, thickness, &baseline);
+  
+  int margin_x = 20;
+  int margin_y = 40;
+  
+  int max_str_width = std::max (score_str_size.width, max_combo_str_size.width);
+  int total_height = score_str_size.height + max_combo_str_size.height + 25;
+  
+  int bg_x = frame.size ().width - max_str_width - margin_x * 2;
+  int bg_y = margin_y / 2;
+  
+  cv::rectangle(frame, 
+                cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
+                cv::Scalar (32, 32, 36),
+                cv::FILLED);             
+  
+  cv::rectangle(frame,
+                cv::Rect (bg_x, bg_y, max_str_width + 2 * margin_x, total_height + margin_y),
+                cv::Scalar (100, 100, 110),
+                2,
+                cv::LINE_AA);
+  
+  int score_x = frame.size ().width - max_str_width - margin_x;
+  int max_combo_x = score_x;
 
-    int score_y = margin_y + score_str_size.height;
-    int max_combo_y = score_y + max_combo_str_size.height + 15;
-    
-    cv::Scalar text_color (230, 230, 230);
-    
-    cv::putText (frame, score_str, cv::Point (score_x, score_y), 
-                font_face, font_scale, text_color, thickness, cv::LINE_AA);
-    cv::putText (frame, max_combo_str, cv::Point (max_combo_x, max_combo_y), 
-                font_face, font_scale, text_color, thickness, cv::LINE_AA);
+  int score_y = margin_y + score_str_size.height;
+  int max_combo_y = score_y + max_combo_str_size.height + 15;
+  
+  cv::Scalar text_color (230, 230, 230);
+  
+  cv::putText (frame, score_str, cv::Point (score_x, score_y), 
+              font_face, font_scale, text_color, thickness, cv::LINE_AA);
+  cv::putText (frame, max_combo_str, cv::Point (max_combo_x, max_combo_y), 
+              font_face, font_scale, text_color, thickness, cv::LINE_AA);
 }
 
 void action::draw_keys (cv::Mat &frame, key::input_system &input)
@@ -178,6 +203,8 @@ void action::update (const float delta_t, key::input_system &input)
     spawn_circle ();
     circle_spawn_timer -= CIRCLE_SPAWN_INTERVAL;
   }
+
+  update_combo_panel ();
 
   draw_keys (objects[0].get_image (), input);
   draw_results_data (objects[0].get_image ());
