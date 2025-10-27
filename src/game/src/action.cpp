@@ -9,11 +9,13 @@
 namespace game
 {
   
-action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
-                                               circle_spawn_timer (0.0f)
+action::action (const cv::Size &screen_size_, results_data &res_data_) 
+          : screen_size (screen_size_),
+            circle_spawn_timer (0.f),
+            res_data (res_data_)
 {
   // Initialize random seed
-  srand(static_cast<unsigned int>(time(nullptr)));
+  srand(static_cast<unsigned int> (time(nullptr)));
 
   // background
   original_data.background = cv::imread ("../resources/action/taiko_background.jpg", cv::IMREAD_UNCHANGED);
@@ -67,6 +69,8 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   kernel::object combo_panel (original_data.combo_panel, combo_rect);
   objects.push_back (combo_panel);
 
+  update_combo_panel ();
+
   // Initialize circles vector
   circles.resize(MAX_CIRCLES);
 }
@@ -93,7 +97,7 @@ void action::update_combo_panel ()
   cv::line (p, cv::Point (cx, cy - r_inner), cv::Point (cx, cy + r_inner), cv::Scalar (180, 180, 180), 3,cv::LINE_AA);
   cv::circle (p, cv::Point (cx, cy), r_outer, cv::Scalar (160, 160, 160), 2, cv::LINE_AA);
 
-  std::string current_combo_str = std::to_string (current_combo);
+  std::string current_combo_str = std::to_string (res_data.current_combo);
   
   int font_face = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
   double font_scale = 1.5;
@@ -115,8 +119,8 @@ void action::update_combo_panel ()
 
 void action::draw_results_data(cv::Mat &frame)
 {
-  std::string score_str = "Score: " + std::to_string (score);
-  std::string max_combo_str = "Max combo: " + std::to_string (max_combo);
+  std::string score_str = "Score: " + std::to_string (res_data.score);
+  std::string max_combo_str = "Max combo: " + std::to_string (res_data.max_combo);
   
   int font_face = cv::FONT_HERSHEY_TRIPLEX | cv::FONT_ITALIC;
   double font_scale = 1.5;
@@ -259,12 +263,12 @@ void action::update_circles (const float delta_t)
       if (circle.position.x < hit_left_big_border)
       {
         circle.active = false;
-        current_combo = 0;
+        res_data.current_combo = 0;
       }
     }
   }
 
-  max_combo = std::max (current_combo, max_combo);
+  res_data.max_combo = std::max (res_data.current_combo, res_data.max_combo);
 }
 
 void action::update_circle_objects ()
@@ -341,8 +345,8 @@ void action::handle_key_press (key::input_system &input)
 
     if (color_pressed == circle.color)
       {
-        score += 300;
-        ++current_combo;
+        res_data.score += 300;
+        ++res_data.current_combo;
         circle.active = false;
       }
   }

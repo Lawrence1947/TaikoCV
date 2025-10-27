@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "keymap.h"
+#include "globals.h"
 
 #include "kernel/include/object.h"
 
@@ -45,7 +46,7 @@ struct action_objects
 class action
 {
 public:
-  action (const cv::Size &screen_size_);
+  action (const cv::Size &screen_size_, results_data &res_data_);
 
   void reset ();
 
@@ -89,9 +90,7 @@ private:
   int hit_left_small_border;
 
   // results data
-  int current_combo = 0;
-  int max_combo = 0;
-  int score = 0;
+  results_data res_data;
 
   // Taiko circles system
   std::vector<taiko_circle> circles;

@@ -5,7 +5,7 @@
 namespace game
 {
   
-results::results (const cv::Size &screen_size_) : screen_size (screen_size_)
+results::results (const cv::Size &screen_size_, results_data &res_data_) : screen_size (screen_size_), res_data (res_data_)
 {
   original_data.background = cv::Mat::zeros(screen_size, CV_8UC3);
 

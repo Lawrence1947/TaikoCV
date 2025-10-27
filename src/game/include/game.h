@@ -49,6 +49,9 @@ private:
   // system info
   cv::Size screen_size;
 
+  // results
+  results_data res_data;
+
   // kernel utils
   kernel::renderer renderer;
 

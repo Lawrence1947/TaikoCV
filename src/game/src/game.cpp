@@ -9,14 +9,17 @@ namespace game
 
 taiko::taiko (int screen_width_, int screen_height_) 
     : screen_size (screen_width_, screen_height_),
+      res_data (),
       renderer (screen_size),
       mode (game_mode::main_menu),
       main_menu (screen_size),
-      playing (screen_size),
-      result (screen_size),
+      playing (screen_size, res_data),
+      result (screen_size, res_data),
       menu_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0)),
       action_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0))
-{}
+{
+  res_data.reset ();
+}
 
 void taiko::on_keys (int key)
 {

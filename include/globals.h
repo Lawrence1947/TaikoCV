@@ -12,5 +12,21 @@ constexpr float target_fps = 60.f;
 // menu
 constexpr double menu_to_action_trans_duration = 0.6;
 
+// result
+struct results_data
+{
+  int current_combo;
+  int max_combo;
+  int score;
+
+  results_data () { reset (); }
+
+  void reset ()
+  {
+    current_combo = 0;
+    max_combo = 0;
+    score = 0;
+  }
+};
 
 #endif

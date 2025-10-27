@@ -3,6 +3,8 @@
 
 #include "kernel/include/object.h"
 
+#include "globals.h"
+
 namespace game
 {
 
@@ -14,7 +16,7 @@ struct results_objects
 class results
 {
 public:
-  results (const cv::Size &screen_size_);
+  results (const cv::Size &screen_size_, results_data &res_data);
 
   void update (const float delta_t);
 
@@ -23,6 +25,9 @@ public:
   ~results ();
 private:
   const cv::Size screen_size;
+
+  // results data
+  results_data res_data;
 
   std::vector<kernel::object> objects;
   results_objects original_data;
