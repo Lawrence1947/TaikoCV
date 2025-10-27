@@ -18,37 +18,33 @@ taiko::taiko (int screen_width_, int screen_height_)
       action_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0))
 {}
 
-void taiko::on_key (int key)
+void taiko::on_keys (int key)
 {
   if (key == key::left_blue)
     {
-      left_blue_pressed = true;
+      input.is_left_blue_pressed = true;
     }
   else if (key == key::right_blue)
     {
-      right_blue_pressed = true;
+      input.is_right_blue_pressed = true;
     }
   else if (key == key::left_red)
     {
-      left_red_pressed = true;
+      input.is_left_red_pressed = true;
     }
   else if (key == key::right_red)
     {
-      right_red_pressed = true;
+      input.is_right_red_pressed = true;
     }
   else if (key == key::enter)
     {
-      enter_pressed = true;
+      input.is_enter_pressed = true;
     }
 }
 
 void taiko::drop_keys ()
 {
-  enter_pressed = false;
-  left_blue_pressed = false;
-  right_blue_pressed = false;
-  left_red_pressed = false;
-  right_blue_pressed = false;
+  input.reset ();
 }
 
 inline void taiko::update_menu_to_action (const float delta_t)
@@ -61,7 +57,7 @@ void taiko::update (const float delta_t)
   if (mode == game_mode::main_menu)
     {
       main_menu.update (delta_t);
-      if (enter_pressed)
+      if (input.is_enter_pressed)
         {
           mode = game_mode::menu_to_action;
         }
@@ -72,8 +68,8 @@ void taiko::update (const float delta_t)
     }
   else if (mode == game_mode::action)
     {
-      playing.update (delta_t);
-      if (enter_pressed)
+      playing.update (delta_t, input);
+      if (input.is_enter_pressed)
         {
           mode = game_mode::results;
           playing.reset ();
@@ -82,7 +78,7 @@ void taiko::update (const float delta_t)
   else if (mode == game_mode::results)
     {
       result.update (delta_t);
-      if (enter_pressed)
+      if (input.is_enter_pressed)
         {
           mode = game_mode::main_menu;
         }

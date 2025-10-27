@@ -4,15 +4,37 @@
 
 namespace key
 {
-  constexpr int escape = 27;        // esp
+constexpr int escape = 27;        // esp
 
-  constexpr int enter = 13;         // enter
+constexpr int enter = 13;         // enter
 
-  constexpr int left_blue = 122;    // z
-  constexpr int right_blue = 120;   // x
+constexpr int left_blue = 122;    // z
+constexpr int right_blue = 120;   // x
 
-  constexpr int left_red = 46;      // .
-  constexpr int right_red = 27;     // /
+constexpr int left_red = 46;      // .
+constexpr int right_red = 27;     // /
+
+struct input_system
+{
+  bool is_enter_pressed = false;
+
+  bool is_left_blue_pressed = false;
+  bool is_right_blue_pressed = false;
+  bool is_left_red_pressed = false;
+  bool is_right_red_pressed = false;
+
+  bool is_blue_pressed () { return is_left_blue_pressed || is_right_blue_pressed; }
+  bool is_red_pressed () { return is_left_red_pressed || is_right_red_pressed; }
+
+  void reset () 
+  {
+    is_enter_pressed = false;
+    is_left_blue_pressed = false;
+    is_right_blue_pressed = false;
+    is_left_red_pressed = false;
+    is_right_red_pressed = false;
+  }
+};
 }
 
 

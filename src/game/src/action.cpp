@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "globals.h"
+
 namespace game
 {
   
@@ -39,6 +41,11 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   hit_r_outer = lane_img.rows / 5;
   hit_r_inner = (int)(hit_r_outer * 0.70);
   hit_r_big   = (int)(hit_r_outer * 1.45);
+
+  hit_right_big_border = hit_x + hit_r_big;
+  hit_left_big_border = hit_x - hit_r_big;
+  hit_right_small_border = hit_x + hit_r_outer;
+  hit_left_small_border = hit_x - hit_r_outer;
 
   // big circle for big taiko
   cv::circle (lane_img, cv::Point (local_hit_x, local_hit_y), hit_r_big, cv::Scalar (80, 80, 85), 3, cv::LINE_AA);
@@ -91,7 +98,7 @@ void action::reset ()
   update_circle_objects ();
 }
 
-void action::update (const float delta_t)
+void action::update (const float delta_t, key::input_system &input)
 {
   // Update circle spawn timer
   circle_spawn_timer += delta_t;
@@ -102,6 +109,8 @@ void action::update (const float delta_t)
     spawn_circle ();
     circle_spawn_timer -= CIRCLE_SPAWN_INTERVAL;
   }
+
+  handle_key_press (input);
   
   // Update all active circles
   update_circles (delta_t);
@@ -115,7 +124,7 @@ action::~action ()
 
 }
 
-void action::spawn_circle()
+void action::spawn_circle ()
 {
   // Find inactive circle
   for (auto &circle : circles)
@@ -136,7 +145,7 @@ void action::spawn_circle()
   }
 }
 
-void action::update_circles(const float delta_t)
+void action::update_circles (const float delta_t)
 {
   for (auto& circle : circles)
   {
@@ -154,7 +163,7 @@ void action::update_circles(const float delta_t)
   }
 }
 
-void action::update_circle_objects()
+void action::update_circle_objects ()
 {
   // Remove old circle objects (keep only background, main_field, combo_panel)
   while (objects.size () > 3)
@@ -197,6 +206,39 @@ void action::update_circle_objects()
 
     kernel::object circle_obj (circle_img, circle_rect);
     objects.push_back (circle_obj);
+  }
+}
+
+bool action::could_circle_be_hitted (const taiko_circle &circle)
+{
+  int circle_x = static_cast<int> (std::lround (circle.position.x));
+  bool pass_left_small_border = hit_right_small_border > circle_x - hit_r_outer + min_division;
+  bool pass_left_big_border = hit_right_big_border > circle_x - hit_r_big + min_division;
+  bool not_pass_right_small_border = circle_x + hit_r_outer > hit_left_small_border + min_division;
+  bool not_pass_right_big_border = circle_x + hit_r_big > hit_left_big_border + min_division;
+  return (circle.size == taiko_size::small 
+      ? (pass_left_small_border && not_pass_right_small_border)
+      : (pass_left_big_border && not_pass_right_big_border));
+}
+
+void action::handle_key_press (key::input_system &input)
+{
+  bool is_blue = input.is_blue_pressed ();
+  bool is_red = input.is_red_pressed ();
+  if (!is_red && !is_blue)
+    return;
+
+  taiko_color color_pressed = (is_blue ? taiko_color::blue : taiko_color::red);
+
+  for (auto &circle : circles)
+  {
+    if (!circle.active || !could_circle_be_hitted (circle))
+      continue;
+
+    if (color_pressed == circle.color)
+      {
+        circle.active = false;
+      }
   }
 }
 

@@ -3,6 +3,8 @@
 
 #include <opencv2/opencv.hpp>
 
+#include "keymap.h"
+
 #include "menu.h"
 #include "action.h"
 #include "results.h"
@@ -29,10 +31,7 @@ public:
   taiko (int screen_width_, int screen_height_);
 
   void drop_keys ();
-  void on_key (int key);
-
-  bool is_blue_pressed () { return left_blue_pressed || right_blue_pressed; }
-  bool is_red_pressed () { return left_red_pressed || right_red_pressed; }
+  void on_keys (int key);
 
   void update (const float delta_t);
 
@@ -62,11 +61,7 @@ private:
   results result;
 
   // keys
-  bool enter_pressed = false;
-  bool left_blue_pressed = false;
-  bool right_blue_pressed = false;
-  bool left_red_pressed = false;
-  bool right_red_pressed = false;
+  key::input_system input;
 
 private:
   // cached data
