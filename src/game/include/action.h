@@ -62,6 +62,8 @@ private:
   bool could_circle_be_hitted (const taiko_circle &circle);
 
   void handle_key_press (key::input_system &input);
+  void draw_keys (cv::Mat &frame, key::input_system &input);
+  void draw_key (cv::Mat &frame, cv::Point pos, const char *label, bool is_down, cv::Scalar color);
 
 private:
   const cv::Size screen_size;

@@ -8,11 +8,11 @@ constexpr int escape = 27;        // esp
 
 constexpr int enter = 13;         // enter
 
-constexpr int left_blue = 122;    // z
-constexpr int right_blue = 120;   // x
+constexpr int left_blue = 100;    // d
+constexpr int right_blue = 102;   // f
 
-constexpr int left_red = 46;      // .
-constexpr int right_red = 27;     // /
+constexpr int left_red = 106;      // j
+constexpr int right_red = 107;     // k
 
 struct input_system
 {

@@ -89,6 +89,31 @@ action::action (const cv::Size &screen_size_) : screen_size (screen_size_),
   circles.resize(MAX_CIRCLES);
 }
 
+void action::draw_keys (cv::Mat &frame, key::input_system &input)
+{
+  const int cy = frame.size ().height / 1.15; 
+  draw_key (frame, cv::Point (frame.size ().width / 10 - screen_size.height / 5, cy), "D", input.is_left_blue_pressed, cv::Scalar (192, 192, 102, 255 ));
+  draw_key (frame, cv::Point (2 * frame.size ().width / 10 - screen_size.height / 5, cy), "F", input.is_right_blue_pressed, cv::Scalar (192, 192, 102, 255 ));
+  draw_key (frame, cv::Point (8 * frame.size ().width / 10, cy), "J", input.is_left_red_pressed, cv::Scalar ( 40, 70, 249, 255 ));
+  draw_key (frame, cv::Point (9 * frame.size ().width / 10, cy), "K", input.is_right_red_pressed, cv::Scalar ( 40, 70, 249, 255 ));
+}
+
+void action::draw_key (cv::Mat &frame, cv::Point pos, const char *label, bool is_down, cv::Scalar color)
+{
+  cv::Rect r (pos.x, pos.y, screen_size.height / 5, screen_size.height / 6);
+  cv::Scalar bg = is_down ? cv::Scalar(60, 60, 60) : color;
+  // cv::Scalar bg = is_down ? cv::Scalar(80, 180, 80) : cv::Scalar(60, 60, 60);
+
+
+  cv::rectangle (frame, r, bg, cv::FILLED, cv::LINE_AA);
+  cv::rectangle (frame, r, {180, 180, 180}, 1, cv::LINE_AA);
+
+  int baseline = 0;
+  cv::Size size = cv::getTextSize (label, cv::FONT_HERSHEY_SIMPLEX, 0, 0, &baseline);
+  cv::Point tp (r.x + (r.width - size.width) / 2, r.y + (r.height - size.height) / 2 + 5);
+  cv::putText (frame, label, tp, cv::FONT_HERSHEY_SIMPLEX, 3, {230, 230, 230}, 5, cv::LINE_AA);
+}
+
 void action::reset ()
 {
   for (auto &circle : circles)
@@ -109,6 +134,8 @@ void action::update (const float delta_t, key::input_system &input)
     spawn_circle ();
     circle_spawn_timer -= CIRCLE_SPAWN_INTERVAL;
   }
+
+  draw_keys (objects[0].get_image (), input);
 
   handle_key_press (input);
   
