@@ -102,9 +102,7 @@ void action::draw_key (cv::Mat &frame, cv::Point pos, const char *label, bool is
 {
   cv::Rect r (pos.x, pos.y, screen_size.height / 5, screen_size.height / 6);
   cv::Scalar bg = is_down ? cv::Scalar(60, 60, 60) : color;
-  // cv::Scalar bg = is_down ? cv::Scalar(80, 180, 80) : cv::Scalar(60, 60, 60);
-
-
+  
   cv::rectangle (frame, r, bg, cv::FILLED, cv::LINE_AA);
   cv::rectangle (frame, r, {180, 180, 180}, 1, cv::LINE_AA);
 
@@ -182,7 +180,7 @@ void action::update_circles (const float delta_t)
       circle.position.x -= circle.speed * delta_t;
       
       // Deactivate if off screen
-      if (circle.position.x < -50) // 50 pixels buffer
+      if (circle.position.x < hit_left_big_border)
       {
         circle.active = false;
       }
