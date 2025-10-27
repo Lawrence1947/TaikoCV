@@ -19,14 +19,19 @@ void draw_transparent_text (cv::Mat& frame, const std::string& text,
   
 menu::menu (const cv::Size &screen_size_) : screen_size (screen_size_)
 {
-  original_data.main_screen = cv::imread ("../resources/main_menu/taiko_main_screen.jpg", cv::IMREAD_UNCHANGED);
+  cv::Mat raw_main_screen = cv::imread ("../resources/main_menu/taiko_main_screen.jpg", cv::IMREAD_UNCHANGED);
+  cv::resize (raw_main_screen, original_data.main_screen, screen_size, 0, 0, cv::INTER_NEAREST);
   original_data.logo = cv::imread ("../resources/main_menu/taiko_logo.png", cv::IMREAD_UNCHANGED);
 
   /// main screen
   cv::Rect fullscreen (0, 0, screen_size.width, screen_size.height);
   main_frame = original_data.main_screen;
 
-  text_params.pos = cv::Point ((screen_size.width - text_params.text_size.width) / 2, screen_size.height * 0.85);
+  int baseline = 0;
+  text_params.text_size = cv::getTextSize (text_params.text, text_params.font, text_params.scale, text_params.thickness, &baseline);
+  text_params.pos = cv::Point ((screen_size.width - text_params.text_size.width) / 2, screen_size.height * 0.85 + baseline);
+
+  printf ("debug %d %d %d", screen_size.width, text_params.text_size.width, screen_size.height);
 
   kernel::object main_screen (main_frame, fullscreen);
   objects.push_back (main_screen);

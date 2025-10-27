@@ -36,7 +36,7 @@ struct menu_text_params
   cv::Point pos;
 
   // size
-  cv::Size text_size = cv::getTextSize (text, font, scale, thickness, nullptr);
+  cv::Size text_size;
 };
 
 class menu
