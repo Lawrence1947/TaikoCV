@@ -13,8 +13,8 @@ taiko::taiko (int screen_width_, int screen_height_)
       renderer (screen_size),
       mode (game_mode::main_menu),
       main_menu (screen_size),
-      playing (screen_size, res_data),
-      result (screen_size, res_data),
+      playing (screen_size, &res_data),
+      result (screen_size, &res_data),
       menu_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0)),
       action_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0)),
       results_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0))

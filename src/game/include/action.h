@@ -46,7 +46,7 @@ struct action_objects
 class action
 {
 public:
-  action (const cv::Size &screen_size_, results_data &res_data_);
+  action (const cv::Size &screen_size_, results_data *res_data_);
 
   void reset ();
 
@@ -90,7 +90,7 @@ private:
   int hit_left_small_border;
 
   // results data
-  results_data &res_data;
+  results_data *res_data;
 
   // Taiko circles system
   std::vector<taiko_circle> circles;
