@@ -13,8 +13,8 @@ taiko::taiko (int screen_width_, int screen_height_)
       renderer (screen_size),
       mode (game_mode::main_menu),
       main_menu (screen_size),
-      playing (screen_size, &res_data),
-      result (screen_size, &res_data),
+      playing (screen_size, res_data),
+      result (screen_size, res_data),
       menu_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0)),
       action_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0)),
       results_frame (screen_size, CV_8UC3, cv::Scalar (0, 0, 0))
@@ -74,6 +74,8 @@ void taiko::update (const float delta_t)
       if (input.is_enter_pressed)
         {
           mode = game_mode::menu_to_action;
+          menu_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
+          action_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
         }
     }
   else if (mode == game_mode::menu_to_action)
@@ -86,6 +88,8 @@ void taiko::update (const float delta_t)
       if (input.is_enter_pressed)
         {
           mode = game_mode::action_to_results;
+          action_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
+          results_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
           playing.reset ();
         }
     }
@@ -99,6 +103,8 @@ void taiko::update (const float delta_t)
       if (input.is_enter_pressed)
         {
           mode = game_mode::results_to_menu;
+          menu_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
+          results_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
         }
     }
   else if (mode == game_mode::results_to_menu)
