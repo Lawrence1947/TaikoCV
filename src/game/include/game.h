@@ -21,7 +21,9 @@ enum class game_mode
   main_menu,
   menu_to_action,
   action,
-  results
+  action_to_results,
+  results,
+  results_to_menu
 };
 
 class taiko 
@@ -44,6 +46,8 @@ public:
 private:
 
   inline void update_menu_to_action (const float delta_t);
+  inline void update_action_to_results (const float delta_t);
+  inline void update_results_to_menu (const float delta_t);
 
 private:
   // system info
@@ -70,8 +74,11 @@ private:
   // cached data
   cv::Mat menu_frame;
   cv::Mat action_frame;
+  cv::Mat results_frame;
 
   double menu_to_action_trans_elapsed = 0.0;
+  double action_to_results_trans_elapsed = 0.0;
+  double results_to_menu_trans_elapsed = 0.0;
 };
 
 };
