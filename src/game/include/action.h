@@ -90,7 +90,7 @@ private:
   int hit_left_small_border;
 
   // results data
-  results_data res_data;
+  results_data &res_data;
 
   // Taiko circles system
   std::vector<taiko_circle> circles;

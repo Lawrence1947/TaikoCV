@@ -27,7 +27,7 @@ private:
   const cv::Size screen_size;
 
   // results data
-  results_data res_data;
+  results_data &res_data;
 
   std::vector<kernel::object> objects;
   results_objects original_data;

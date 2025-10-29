@@ -176,6 +176,7 @@ void taiko::render (cv::Mat &frame)
           {
             results_to_menu_trans_elapsed = 0.0;
             mode = game_mode::main_menu;
+            res_data.reset ();
           }
         break;
       }
