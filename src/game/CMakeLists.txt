@@ -11,6 +11,7 @@ set(GAME_SOURCES
   ${GAME_SOURCE_DIR}/action.cpp
   ${GAME_SOURCE_DIR}/results.cpp
   ${GAME_SOURCE_DIR}/beatmap.cpp
+  ${GAME_SOURCE_DIR}/audio.cpp
 )
 set(GAME_HEADERS 
   ${GAME_INCLUDE_DIR}/game.h

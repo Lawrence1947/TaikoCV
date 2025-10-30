@@ -19,16 +19,14 @@ struct map_note
   taiko_size  size;
 };
 
-class beatmap
+struct beatmap
 {
-public:
   beatmap (const std::string &path);
 
   bool load_beatmap (const std::string &path);
 
   ~beatmap () {}
 
-private:
   int offset_ms = 0;
   float scroll_speed = 500.0f;
   int lead_margin_px = 60;

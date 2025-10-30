@@ -9,6 +9,7 @@
 
 #include "kernel/include/object.h"
 #include "beatmap.h"
+#include "audio.h"
 
 namespace game
 {
@@ -16,13 +17,23 @@ namespace game
 struct taiko_circle
 {
   taiko_color color;
-  taiko_size size;
+  taiko_size  size;
   cv::Point2f position;
-  float speed;
-  bool active;
-  
-  taiko_circle() : color(taiko_color::red), size(taiko_size::small), 
-                   position(0.f, 0.f), speed(0.f), active(false) {}
+  float       speed;
+  bool        active;
+
+  float spawn_t;
+  float start_x;
+
+  taiko_circle ()
+    : color   (taiko_color::red),
+      size    (taiko_size::small),
+      position(0.f, 0.f),
+      speed   (0.f),
+      active  (false),
+      spawn_t (0.f),
+      start_x (0.f)
+  {}
 };
 
 struct action_objects
@@ -50,6 +61,9 @@ private:
   void update_circles(const float delta_t);
   void update_circle_objects ();
   bool could_circle_be_hitted (const taiko_circle &circle);
+
+  void try_spawn_notes_from_map (float map_time_s);
+  void spawn_circle_from_note (const map_note &note, float now_s);
 
   void handle_key_press (key::input_system &input);
   void draw_keys (cv::Mat &frame, key::input_system &input);
@@ -91,6 +105,10 @@ private:
   // audio
   beatmap bm;
   audio::music music_track;
+  size_t next_note_idx = 0;
+
+  // time
+  float elapsed = 0.f;
 };
 
 }

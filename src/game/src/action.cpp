@@ -5,7 +5,6 @@
 #include <ctime>
 
 #include "globals.h"
-#include "audio.h"
 
 #include <iostream>
 
@@ -18,8 +17,13 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
             res_data (res_data_),
             bm ("../maps/test_map/test_map.json")
 {
-  audio::init ();
-  audio::play_once ("../maps/test_map/test_song.mp3");
+  audio::init();
+
+  if (!bm.audio_path.empty())
+  {
+    audio::load_music(music_track, bm.audio_path);
+    audio::play_music(music_track, false);
+  }
 
   // Initialize random seed
   srand(static_cast<unsigned int> (time(nullptr)));
@@ -201,34 +205,69 @@ void action::reset ()
     circle.active = false;
   }
   update_circle_objects ();
+  elapsed = 0.f;
 }
 
 void action::update (const float delta_t, key::input_system &input)
 {
-  // Update circle spawn timer
-  circle_spawn_timer += delta_t;
-  
-  // Spawn new circle if interval has passed
-  if (circle_spawn_timer >= CIRCLE_SPAWN_INTERVAL)
-  {
-    spawn_circle ();
-    circle_spawn_timer -= CIRCLE_SPAWN_INTERVAL;
-  }
+  float audio_time_s = audio::get_music_time_s (music_track);
+  float map_time_s   = audio_time_s + bm.offset_ms * 0.001f;
+
+  elapsed = map_time_s;
+
+  try_spawn_notes_from_map (elapsed);
 
   update_combo_panel ();
-
   draw_keys (objects[0].get_image (), input);
   draw_results_data (objects[0].get_image ());
-
-  // printf ("%d %d %d\n", score, current_combo, max_combo);
-
   handle_key_press (input);
-  
-  // Update all active circles
-  update_circles (delta_t);
-  
-  // Update circle objects for rendering
+
+  update_circles (0.f);
   update_circle_objects ();
+}
+
+void action::try_spawn_notes_from_map (float map_time_s)
+{
+  if (next_note_idx >= bm.notes.size())
+    return;
+
+  const int start_x = screen_size.width + bm.lead_margin_px;
+  const int dist_px = start_x - hit_x;
+  const float lead_time_s = dist_px / bm.scroll_speed;
+
+  while (next_note_idx < bm.notes.size())
+  {
+    const auto &mn = bm.notes[next_note_idx];
+    float t_hit_s = mn.t_ms * 0.001f;
+
+    if (map_time_s < t_hit_s - lead_time_s)
+      break;
+
+    spawn_circle_from_note (mn, map_time_s);
+    ++next_note_idx;
+  }
+}
+
+void action::spawn_circle_from_note (const map_note &note, float now_s)
+{
+  for (auto &c : circles)
+  {
+    if (!c.active)
+    {
+      const int start_x = screen_size.width + bm.lead_margin_px;
+
+      c.color    = note.color;
+      c.size     = note.size;
+      c.position = cv::Point2f((float)start_x, (float)hit_y);
+      c.speed    = bm.scroll_speed;
+      c.active   = true;
+
+      c.spawn_t  = now_s;
+      c.start_x  = (float)start_x;
+
+      return;
+    }
+  }
 }
 
 action::~action () 
@@ -257,21 +296,23 @@ void action::spawn_circle ()
   }
 }
 
-void action::update_circles (const float delta_t)
+void action::update_circles (const float /*delta_t*/)
 {
-  for (auto& circle : circles)
+  float t_now = elapsed;   // <-- вот так
+
+  for (auto &c : circles)
   {
-    if (circle.active)
+    if (!c.active) continue;
+
+    float lived = t_now - c.spawn_t;
+    if (lived < 0.f) lived = 0.f;
+
+    c.position.x = c.start_x - c.speed * lived;
+
+    if (c.position.x < hit_left_big_border)
     {
-      // Move circle left
-      circle.position.x -= circle.speed * delta_t;
-      
-      // Deactivate if off screen
-      if (circle.position.x < hit_left_big_border)
-      {
-        circle.active = false;
-        res_data.current_combo = 0;
-      }
+      c.active = false;
+      res_data.current_combo = 0;
     }
   }
 
