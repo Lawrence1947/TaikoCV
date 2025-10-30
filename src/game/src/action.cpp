@@ -23,7 +23,6 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
   {
     if (audio::load_music (music_track, bm.audio_path))
       {
-        audio::play_music (music_track, false);
         std::cout << "[audio] loaded and started: " << bm.audio_path << "\n";
       }
     else
@@ -95,6 +94,11 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
 
   // Initialize circles vector
   circles.resize(MAX_CIRCLES);
+}
+
+void action::play ()
+{
+  audio::play_music (music_track, false);
 }
 
 void action::update_combo_panel ()

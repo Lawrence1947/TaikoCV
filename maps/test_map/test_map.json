@@ -1,5 +1,5 @@
 {
-  "audio": "test_song.mp3",
+  "audio": "../maps/test_map/test_song.mp3",
   "offset_ms": 0,
   "scroll_speed_px_s": 520.0,
   "lead_margin_px": 80,

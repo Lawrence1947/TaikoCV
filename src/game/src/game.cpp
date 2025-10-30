@@ -136,6 +136,7 @@ void taiko::render (cv::Mat &frame)
           {
             menu_to_action_trans_elapsed = 0.0;
             mode = game_mode::action;
+            playing.play ();
           }
         break;
       }

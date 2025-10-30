@@ -50,6 +50,8 @@ public:
 
   void reset ();
 
+  void play ();
+
   void update (const float delta_t, key::input_system &input);
 
   std::vector<kernel::object> &get_objects () { return objects; }
