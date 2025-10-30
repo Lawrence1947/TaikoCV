@@ -316,7 +316,11 @@ void action::spawn_circle_from_note (const map_note &note, float now_s)
 
 action::~action () 
 {
-
+  if (music_track.loaded)
+    {
+      audio::stop_music (music_track);
+      audio::unload_music (music_track);
+    }
 }
 
 void action::spawn_circle ()

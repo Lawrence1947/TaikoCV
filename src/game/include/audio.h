@@ -27,6 +27,8 @@ namespace audio
   void stop_music(music &m);
 
   float get_music_time_s(music &m);
+
+  void unload_music(music &m);
 }
 
 }
