@@ -98,7 +98,20 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
 
 void action::play ()
 {
-  audio::play_music (music_track, false);
+  elapsed = 0.f;
+
+  next_note_idx = 0;
+
+  for (auto &c : circles)
+  {
+    c.active = false;
+  }
+
+  if (music_track.loaded)
+  {
+    audio::stop_music (music_track);
+    audio::play_music (music_track, false);
+  }
 }
 
 void action::update_combo_panel ()
@@ -221,6 +234,7 @@ void action::reset ()
   }
   update_circle_objects ();
   elapsed = 0.f;
+  next_note_idx = 0;
 }
 
 void action::update (const float delta_t, key::input_system &input)
