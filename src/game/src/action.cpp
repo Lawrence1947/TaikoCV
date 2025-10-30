@@ -65,10 +65,10 @@ action::action (const cv::Size &screen_size_, results_data &res_data_, game_mode
   hit_r_inner = (int)(hit_r_outer * 0.70);
   hit_r_big   = (int)(hit_r_outer * 1.45);
 
-  hit_right_big_border = hit_x + hit_r_big;
-  hit_left_big_border = hit_x - hit_r_big;
-  hit_right_small_border = hit_x + hit_r_outer;
-  hit_left_small_border = hit_x - hit_r_outer;
+  hit_right_big_border = hit_x + hit_r_big / 4;
+  hit_left_big_border = hit_x - hit_r_big / 2;
+  hit_right_small_border = hit_x + hit_r_outer / 4;
+  hit_left_small_border = hit_x - hit_r_outer / 2;
 
   // big circle for big taiko
   cv::circle (lane_img, cv::Point (local_hit_x, local_hit_y), hit_r_big, cv::Scalar (80, 80, 85), 3, cv::LINE_AA);
