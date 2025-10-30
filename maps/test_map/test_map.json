@@ -1,12 +1,41 @@
 {
   "audio": "test_song.mp3",
   "offset_ms": 0,
-  "scroll_speed_px_s": 500,
-  "lead_margin_px": 60,
+  "scroll_speed_px_s": 520.0,
+  "lead_margin_px": 80,
   "notes": [
+    { "t": 0,    "color": "red",  "size": "small" },
+    { "t": 500,  "color": "blue", "size": "small" },
     { "t": 1000, "color": "red",  "size": "small" },
-    { "t": 1250, "color": "blue", "size": "small" },
-    { "t": 1750, "color": "red",  "size": "big"   },
-    { "t": 2250, "color": "blue", "size": "small" }
+    { "t": 1500, "color": "blue", "size": "small" },
+
+    { "t": 2000, "color": "red",  "size": "big"   },
+    { "t": 2600, "color": "blue", "size": "big"   },
+
+    { "t": 3400, "color": "red",  "size": "small" },
+    { "t": 3900, "color": "red",  "size": "small" },
+    { "t": 4300, "color": "blue", "size": "small" },
+    { "t": 4700, "color": "blue", "size": "small" },
+
+    { "t": 5200, "color": "red",  "size": "small" },
+    { "t": 5600, "color": "red",  "size": "small" },
+    { "t": 6000, "color": "blue", "size": "small" },
+    { "t": 6400, "color": "red",  "size": "small" },
+
+    { "t": 7000, "color": "red",  "size": "big"   },
+    { "t": 7600, "color": "blue", "size": "big"   },
+
+    { "t": 8300, "color": "red",  "size": "small" },
+    { "t": 8700, "color": "blue", "size": "small" },
+    { "t": 9100, "color": "red",  "size": "small" },
+    { "t": 9500, "color": "blue", "size": "small" },
+
+    { "t": 10000, "color": "red",  "size": "small" },
+    { "t": 10500, "color": "red",  "size": "small" },
+    { "t": 11000, "color": "blue", "size": "small" },
+    { "t": 11500, "color": "red",  "size": "small" },
+
+    { "t": 12000, "color": "red",  "size": "big"   },
+    { "t": 12600, "color": "blue", "size": "big"   }
   ]
 }

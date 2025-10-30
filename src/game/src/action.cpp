@@ -17,12 +17,23 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
             res_data (res_data_),
             bm ("../maps/test_map/test_map.json")
 {
-  audio::init();
+  audio::init ();
 
-  if (!bm.audio_path.empty())
+  if (!bm.audio_path.empty ())
   {
-    audio::load_music(music_track, bm.audio_path);
-    audio::play_music(music_track, false);
+    if (audio::load_music (music_track, bm.audio_path))
+      {
+        audio::play_music (music_track, false);
+        std::cout << "[audio] loaded and started: " << bm.audio_path << "\n";
+      }
+    else
+      {
+        std::cout << "[audio] FAILED to load: " << bm.audio_path << "\n";
+      }
+  }
+  else
+  {
+    std::cout << "[audio] beatmap has empty audio_path\n";
   }
 
   // Initialize random seed
@@ -210,12 +221,27 @@ void action::reset ()
 
 void action::update (const float delta_t, key::input_system &input)
 {
-  float audio_time_s = audio::get_music_time_s (music_track);
-  float map_time_s   = audio_time_s + bm.offset_ms * 0.001f;
+  float audio_time_s = 0.f;
+  bool  have_audio   = music_track.loaded;
 
-  elapsed = map_time_s;
+  if (have_audio)
+    {
+      audio_time_s = audio::get_music_time_s (music_track);
+    }
 
-  try_spawn_notes_from_map (elapsed);
+  float map_time_s = 0.f;
+  if (have_audio)
+    {
+      map_time_s = audio_time_s + bm.offset_ms * 0.001f;
+      elapsed    = map_time_s;
+    }
+  else
+    {
+      elapsed += delta_t;
+      map_time_s = elapsed;
+    }
+
+  try_spawn_notes_from_map (map_time_s);
 
   update_combo_panel ();
   draw_keys (objects[0].get_image (), input);
