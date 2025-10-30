@@ -19,6 +19,7 @@ set(GAME_HEADERS
   ${GAME_INCLUDE_DIR}/action.h
   ${GAME_INCLUDE_DIR}/results.h
   ${GAME_INCLUDE_DIR}/beatmap.h
+  ${GAME_INCLUDE_DIR}/audio.h
 )
 
 include_directories(${CMAKE_SOURCE_DIR}/src/)

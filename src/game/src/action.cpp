@@ -5,6 +5,9 @@
 #include <ctime>
 
 #include "globals.h"
+#include "audio.h"
+
+#include <iostream>
 
 namespace game
 {
@@ -15,6 +18,9 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
             res_data (res_data_),
             bm ("../maps/test_map/test_map.json")
 {
+  audio::init ();
+  audio::play_once ("../maps/test_map/test_song.mp3");
+
   // Initialize random seed
   srand(static_cast<unsigned int> (time(nullptr)));
 
