@@ -40,32 +40,10 @@ inline bool init()
   if (g_inited)
     return true;
 
-  // Порядок, который мы хотим
-  ma_backend backends[] = {
-    ma_backend_pulseaudio,
-    ma_backend_alsa
-  };
-
-  ma_context_config ctxCfg = ma_context_config_init ();
-  ma_context ctx;
-  ma_result r = ma_context_init (backends,
-                                sizeof(backends)/sizeof(backends[0]),
-                                &ctxCfg,
-                                &ctx);
-  if (r != MA_SUCCESS) 
-    {
-      fprintf(stderr, "ma_context_init failed: %d\n", r);
-      return false;
-    }
-
-  ma_engine_config engCfg = ma_engine_config_init();
-  engCfg.pContext = &ctx;
-
-  r = ma_engine_init (&engCfg, &g_engine);
+  ma_result r = ma_engine_init (NULL, &g_engine);
   if (r != MA_SUCCESS) 
     {
       fprintf(stderr, "ma_engine_init failed: %d\n", r);
-      ma_context_uninit(&ctx);
       return false;
     }
 
