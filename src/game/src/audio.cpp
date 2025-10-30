@@ -43,6 +43,7 @@ void play_music(music &m, bool loop)
 {
   if (!m.loaded) return;
   ma_sound_set_looping(&m.sound, loop ? MA_TRUE : MA_FALSE);
+  ma_sound_seek_to_pcm_frame(&m.sound, 0);
   ma_sound_start(&m.sound);
 }
 

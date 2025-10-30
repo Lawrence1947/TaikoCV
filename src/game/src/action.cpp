@@ -236,6 +236,7 @@ void action::reset ()
     circle.active = false;
   }
   update_circle_objects ();
+  audio::stop_music (music_track);
   elapsed = 0.f;
   next_note_idx = 0;
   miss_streak = 0;
