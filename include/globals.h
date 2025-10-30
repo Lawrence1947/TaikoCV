@@ -44,4 +44,14 @@ enum class taiko_size
   big
 };
 
+enum class game_mode
+{
+  main_menu,
+  menu_to_action,
+  action,
+  action_to_results,
+  results,
+  results_to_menu
+};
+
 #endif

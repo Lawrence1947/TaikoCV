@@ -11,11 +11,12 @@
 namespace game
 {
   
-action::action (const cv::Size &screen_size_, results_data &res_data_) 
+action::action (const cv::Size &screen_size_, results_data &res_data_, game_mode &mode_) 
           : screen_size (screen_size_),
             circle_spawn_timer (0.f),
             res_data (res_data_),
-            bm ("../maps/test_map/test_map.json")
+            bm ("../maps/test_map/test_map.json"),
+            mode (mode_)
 {
   audio::init ();
 
@@ -99,13 +100,15 @@ action::action (const cv::Size &screen_size_, results_data &res_data_)
 void action::play ()
 {
   elapsed = 0.f;
-
+  prev_map_time_s = 0.f;
   next_note_idx = 0;
 
   for (auto &c : circles)
   {
     c.active = false;
   }
+
+  miss_streak = 0;
 
   if (music_track.loaded)
   {
@@ -235,6 +238,7 @@ void action::reset ()
   update_circle_objects ();
   elapsed = 0.f;
   next_note_idx = 0;
+  miss_streak = 0;
 }
 
 void action::update (const float delta_t, key::input_system &input)
@@ -259,7 +263,7 @@ void action::update (const float delta_t, key::input_system &input)
       map_time_s = elapsed;
     }
 
-  try_spawn_notes_from_map (map_time_s);
+  try_spawn_notes_from_map (prev_map_time_s, map_time_s);
 
   update_combo_panel ();
   draw_keys (objects[0].get_image (), input);
@@ -268,26 +272,33 @@ void action::update (const float delta_t, key::input_system &input)
 
   update_circles (0.f);
   update_circle_objects ();
+
+  prev_map_time_s = map_time_s;
 }
 
-void action::try_spawn_notes_from_map (float map_time_s)
+void action::try_spawn_notes_from_map (float prev_map_time_s, float curr_map_time_s)
 {
   if (next_note_idx >= bm.notes.size())
     return;
 
-  const int start_x = screen_size.width + bm.lead_margin_px;
-  const int dist_px = start_x - hit_x;
+  const int   start_x     = screen_size.width + bm.lead_margin_px;
+  const int   dist_px     = start_x - hit_x;
   const float lead_time_s = dist_px / bm.scroll_speed;
 
   while (next_note_idx < bm.notes.size())
   {
     const auto &mn = bm.notes[next_note_idx];
-    float t_hit_s = mn.t_ms * 0.001f;
+    const float t_hit_s   = mn.t_ms * 0.001f;
+    const float t_spawn_s = t_hit_s - lead_time_s;
 
-    if (map_time_s < t_hit_s - lead_time_s)
+    if (t_spawn_s > curr_map_time_s)
       break;
 
-    spawn_circle_from_note (mn, map_time_s);
+    if (t_spawn_s <= curr_map_time_s && t_spawn_s > prev_map_time_s - 0.0001f)
+      {
+        spawn_circle_from_note (mn, curr_map_time_s);
+      }
+
     ++next_note_idx;
   }
 }
@@ -361,6 +372,16 @@ void action::update_circles (const float /*delta_t*/)
     {
       c.active = false;
       res_data.current_combo = 0;
+
+      ++miss_streak;
+
+      if (miss_streak >= 3)
+      {
+        mode = game_mode::action_to_results;
+
+        if (music_track.loaded)
+          audio::stop_music (music_track);
+      }
     }
   }
 
@@ -415,6 +436,9 @@ void action::update_circle_objects ()
 
 bool action::could_circle_be_hitted (const taiko_circle &circle)
 {
+  if (elapsed - circle.spawn_t < 0.05f)
+    return false;
+
   int circle_x = static_cast<int> (std::lround (circle.position.x));
   bool pass_left_small_border = hit_right_small_border > circle_x - hit_r_outer + min_division;
   bool pass_left_big_border = hit_right_big_border > circle_x - hit_r_big + min_division;
@@ -444,6 +468,8 @@ void action::handle_key_press (key::input_system &input)
         res_data.score += 300;
         ++res_data.current_combo;
         circle.active = false;
+
+        miss_streak = 0;
       }
   }
 }

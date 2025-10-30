@@ -1,41 +1,52 @@
 {
   "audio": "../maps/test_map/test_song.mp3",
-  "offset_ms": 0,
+  "offset_ms": -70,
   "scroll_speed_px_s": 520.0,
   "lead_margin_px": 80,
   "notes": [
     { "t": 0,    "color": "red",  "size": "small" },
-    { "t": 500,  "color": "blue", "size": "small" },
-    { "t": 1000, "color": "red",  "size": "small" },
-    { "t": 1500, "color": "blue", "size": "small" },
+    { "t": 531,  "color": "blue", "size": "small" },
+    { "t": 1062, "color": "red",  "size": "small" },
+    { "t": 1593, "color": "blue", "size": "small" },
 
-    { "t": 2000, "color": "red",  "size": "big"   },
-    { "t": 2600, "color": "blue", "size": "big"   },
+    { "t": 2124, "color": "red",  "size": "big"   },
+    { "t": 2655, "color": "red",  "size": "small" },
+    { "t": 2910, "color": "blue", "size": "small" },
 
-    { "t": 3400, "color": "red",  "size": "small" },
-    { "t": 3900, "color": "red",  "size": "small" },
-    { "t": 4300, "color": "blue", "size": "small" },
-    { "t": 4700, "color": "blue", "size": "small" },
+    { "t": 3186, "color": "red",  "size": "small" },
+    { "t": 3717, "color": "blue", "size": "small" },
+    { "t": 4248, "color": "red",  "size": "small" },
+    { "t": 4779, "color": "blue", "size": "small" },
 
-    { "t": 5200, "color": "red",  "size": "small" },
-    { "t": 5600, "color": "red",  "size": "small" },
-    { "t": 6000, "color": "blue", "size": "small" },
-    { "t": 6400, "color": "red",  "size": "small" },
+    { "t": 5310, "color": "red",  "size": "big"   },
+    { "t": 5575, "color": "blue", "size": "small" },
+    { "t": 5840, "color": "red",  "size": "small" },
 
-    { "t": 7000, "color": "red",  "size": "big"   },
-    { "t": 7600, "color": "blue", "size": "big"   },
+    { "t": 6371, "color": "red",  "size": "small" },
+    { "t": 6902, "color": "blue", "size": "small" },
+    { "t": 7433, "color": "red",  "size": "small" },
+    { "t": 7964, "color": "blue", "size": "small" },
 
-    { "t": 8300, "color": "red",  "size": "small" },
-    { "t": 8700, "color": "blue", "size": "small" },
-    { "t": 9100, "color": "red",  "size": "small" },
-    { "t": 9500, "color": "blue", "size": "small" },
+    { "t": 8495, "color": "red",  "size": "big"   },
+    { "t": 9026, "color": "red",  "size": "small" },
+    { "t": 9291, "color": "blue", "size": "small" },
 
-    { "t": 10000, "color": "red",  "size": "small" },
-    { "t": 10500, "color": "red",  "size": "small" },
-    { "t": 11000, "color": "blue", "size": "small" },
-    { "t": 11500, "color": "red",  "size": "small" },
+    { "t": 9556,  "color": "red",  "size": "small" },
+    { "t": 10087, "color": "red",  "size": "small" },
+    { "t": 10618, "color": "blue", "size": "small" },
+    { "t": 11149, "color": "blue", "size": "small" },
 
-    { "t": 12000, "color": "red",  "size": "big"   },
-    { "t": 12600, "color": "blue", "size": "big"   }
+    { "t": 11680, "color": "red",  "size": "big"   },
+    { "t": 12211, "color": "blue", "size": "small" },
+    { "t": 12476, "color": "red",  "size": "small" },
+
+    { "t": 13007, "color": "red",  "size": "small" },
+    { "t": 13538, "color": "blue", "size": "small" },
+    { "t": 14069, "color": "red",  "size": "small" },
+    { "t": 14600, "color": "blue", "size": "small" },
+
+    { "t": 15131, "color": "red",  "size": "big"   },
+    { "t": 15662, "color": "red",  "size": "small" },
+    { "t": 15927, "color": "blue", "size": "small" }
   ]
 }

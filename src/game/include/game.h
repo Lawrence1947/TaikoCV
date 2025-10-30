@@ -16,16 +16,6 @@
 namespace game
 {
 
-enum class game_mode
-{
-  main_menu,
-  menu_to_action,
-  action,
-  action_to_results,
-  results,
-  results_to_menu
-};
-
 class taiko 
 {
 public:

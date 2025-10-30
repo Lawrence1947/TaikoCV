@@ -46,7 +46,7 @@ struct action_objects
 class action
 {
 public:
-  action (const cv::Size &screen_size_, results_data &res_data_);
+  action (const cv::Size &screen_size_, results_data &res_data_, game_mode &mode_);
 
   void reset ();
 
@@ -64,7 +64,7 @@ private:
   void update_circle_objects ();
   bool could_circle_be_hitted (const taiko_circle &circle);
 
-  void try_spawn_notes_from_map (float map_time_s);
+  void try_spawn_notes_from_map (float prev_map_time_s, float curr_map_time_s);
   void spawn_circle_from_note (const map_note &note, float now_s);
 
   void handle_key_press (key::input_system &input);
@@ -94,6 +94,8 @@ private:
   int hit_right_small_border;
   int hit_left_small_border;
 
+  int miss_streak = 0;
+
   // results data
   results_data &res_data;
 
@@ -111,6 +113,10 @@ private:
 
   // time
   float elapsed = 0.f;
+  float prev_map_time_s = 0.f;
+
+  // game
+  game_mode &mode;
 };
 
 }
