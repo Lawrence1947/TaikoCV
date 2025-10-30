@@ -25,12 +25,39 @@
 
 
     { "t": 19000, "color": "red",  "size": "small"   },
-    { "t": 19250, "color": "red",  "size": "small"   },
-    { "t": 19500, "color": "red",  "size": "small"   },
-    { "t": 19750, "color": "red",  "size": "small"   },
-    { "t": 20000, "color": "red",  "size": "small"   },
-    { "t": 20250, "color": "blue",  "size": "small"   },
-    { "t": 20500, "color": "red",  "size": "small"   },
-    { "t": 20750, "color": "blue",  "size": "small"   }
+    { "t": 19300, "color": "red",  "size": "small"   },
+    { "t": 19600, "color": "red",  "size": "small"   },
+    { "t": 19900, "color": "red",  "size": "small"   },
+    { "t": 20200, "color": "red",  "size": "small"   },
+    { "t": 20500, "color": "blue",  "size": "small"   },
+    { "t": 20800, "color": "red",  "size": "small"   },
+    { "t": 21100, "color": "blue",  "size": "small"   },
+
+    { "t": 23000, "color": "red",  "size": "small"   },
+    { "t": 23300, "color": "red",  "size": "small"   },
+    { "t": 23600, "color": "blue",  "size": "small"   },
+    { "t": 23900, "color": "red",  "size": "small"   },
+
+    { "t": 24900, "color": "blue",  "size": "small"   },
+    { "t": 25400, "color": "red",  "size": "small"   },
+    { "t": 25700, "color": "blue",  "size": "small"   },
+
+    { "t": 27400, "color": "red",  "size": "small"   },
+    { "t": 27700, "color": "red",  "size": "small"   },
+    { "t": 28000, "color": "red",  "size": "small"   },
+    { "t": 28300, "color": "red",  "size": "small"   },
+    { "t": 28600, "color": "red",  "size": "small"   },
+    { "t": 28900, "color": "blue",  "size": "small"   },
+    { "t": 29200, "color": "red",  "size": "small"   },
+    { "t": 29500, "color": "blue",  "size": "small"   },
+
+    { "t": 31400, "color": "red",  "size": "small"   },
+    { "t": 31700, "color": "red",  "size": "small"   },
+    { "t": 32000, "color": "blue",  "size": "small"   },
+    { "t": 32300, "color": "red",  "size": "small"   },
+
+    { "t": 34300, "color": "blue",  "size": "small"   },
+    { "t": 34900, "color": "blue",  "size": "small"   },
+    { "t": 35500, "color": "blue",  "size": "small"   }
   ]
 }
