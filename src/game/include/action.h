@@ -88,8 +88,9 @@ private:
   static constexpr float CIRCLE_SPEED = 500.0f; // pixels per second
   static constexpr int MAX_CIRCLES = 10; // maximum active circless
 
-  // beatmap
+  // audio
   beatmap bm;
+  audio::music music_track;
 };
 
 }
