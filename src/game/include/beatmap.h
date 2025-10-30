@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 
-#include "nlohmann/json.hpp"
+#include "third_party/nlohmann/json.hpp"
 
 #include "globals.h"
 
