@@ -12,7 +12,8 @@ namespace game
 action::action (const cv::Size &screen_size_, results_data &res_data_) 
           : screen_size (screen_size_),
             circle_spawn_timer (0.f),
-            res_data (res_data_)
+            res_data (res_data_),
+            bm ("../maps/test_map/test_map.json")
 {
   // Initialize random seed
   srand(static_cast<unsigned int> (time(nullptr)));

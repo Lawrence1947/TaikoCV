@@ -8,21 +8,10 @@
 #include "globals.h"
 
 #include "kernel/include/object.h"
+#include "beatmap.h"
 
 namespace game
 {
-
-enum class taiko_color
-{
-  red,
-  blue
-};
-
-enum class taiko_size
-{
-  small,
-  big
-};
 
 struct taiko_circle
 {
@@ -98,6 +87,9 @@ private:
   static constexpr float CIRCLE_SPAWN_INTERVAL = 0.5f; // spawn every 1 second for testing
   static constexpr float CIRCLE_SPEED = 500.0f; // pixels per second
   static constexpr int MAX_CIRCLES = 10; // maximum active circless
+
+  // beatmap
+  beatmap bm;
 };
 
 }

@@ -21,6 +21,7 @@ set(GAME_HEADERS
 
 include_directories(${CMAKE_SOURCE_DIR}/src/)
 include_directories(${CMAKE_SOURCE_DIR}/src/game/include)
+include_directories(${CMAKE_SOURCE_DIR}/src/third_party)
 
 add_library(GAME STATIC ${GAME_SOURCES} ${GAME_HEADERS})
 

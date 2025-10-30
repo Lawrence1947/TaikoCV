@@ -1,0 +1,12 @@
+{
+  "audio": "test_song.mp3",
+  "offset_ms": 0,
+  "scroll_speed_px_s": 500,
+  "lead_margin_px": 60,
+  "notes": [
+    { "t": 1000, "color": "red",  "size": "small" },
+    { "t": 1250, "color": "blue", "size": "small" },
+    { "t": 1750, "color": "red",  "size": "big"   },
+    { "t": 2250, "color": "blue", "size": "small" }
+  ]
+}

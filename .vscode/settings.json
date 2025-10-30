@@ -65,6 +65,11 @@
     "typeinfo": "cpp",
     "variant": "cpp",
     "format": "cpp",
-    "bitset": "cpp"
+    "bitset": "cpp",
+    "any": "cpp",
+    "codecvt": "cpp",
+    "forward_list": "cpp",
+    "ranges": "cpp",
+    "valarray": "cpp"
   }
 }

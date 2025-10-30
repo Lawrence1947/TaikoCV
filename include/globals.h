@@ -31,4 +31,17 @@ struct results_data
   }
 };
 
+// common
+enum class taiko_color
+{
+  red,
+  blue
+};
+
+enum class taiko_size
+{
+  small,
+  big
+};
+
 #endif
