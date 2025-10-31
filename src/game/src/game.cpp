@@ -85,13 +85,6 @@ void taiko::update (const float delta_t)
   else if (mode == game_mode::action)
     {
       playing.update (delta_t, input);
-      if (input.is_enter_pressed)
-        {
-          mode = game_mode::action_to_results;
-          action_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
-          results_frame = cv::Mat (screen_size, CV_8UC3, cv::Scalar (0, 0, 0));
-          playing.reset ();
-        }
     }
   else if (mode == game_mode::action_to_results)
     {
