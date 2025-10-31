@@ -1,6 +1,6 @@
 {
-  "audio": "../maps/test_map/test_song.mp3",
-  "offset_ms": -70,
+  "audio": "../maps/test_map/test_song_short.mp3",
+  "offset_ms": -30,
   "scroll_speed_px_s": 520.0,
   "lead_margin_px": 80,
   "notes": [
@@ -37,7 +37,7 @@
     { "t": 23900, "color": "red",  "size": "small" },
 
     { "t": 24900, "color": "blue", "size": "small" },
-    { "t": 25400, "color": "red",  "size": "small" },
+    { "t": 25400, "color": "red",  "size": "big" },
     { "t": 25700, "color": "blue", "size": "small" },
 
     { "t": 27400, "color": "red",  "size": "small" },
@@ -55,7 +55,7 @@
     { "t": 32300, "color": "red",  "size": "small" },
 
     { "t": 34300, "color": "blue", "size": "small" },
-    { "t": 34900, "color": "blue", "size": "small" },
+    { "t": 34900, "color": "blue", "size": "big" },
     { "t": 35500, "color": "blue", "size": "small" }
   ]
 }
