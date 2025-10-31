@@ -85,6 +85,11 @@ export DISPLAY=:0
 }
 ```
 
+## Gameplay Screen
+
+<img width="1600" height="900" alt="gameplay" src="https://github.com/user-attachments/assets/7872fa38-f84e-40bc-badf-39ac90abbc92" />
+
+
 ## Future Plans
 
 - Configurable hit windows
