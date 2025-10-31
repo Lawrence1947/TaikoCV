@@ -250,6 +250,11 @@ void action::update (const float delta_t, key::input_system &input)
   if (have_audio)
     {
       audio_time_s = audio::get_music_time_s (music_track);
+      if (!ma_sound_is_playing(&music_track.sound))
+        {
+          mode = game_mode::action_to_results;
+          audio::stop_music (music_track);
+        }
     }
 
   float map_time_s = 0.f;
